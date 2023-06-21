@@ -1,0 +1,6 @@
+<h2>회원 정보 수정</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">수정</button>
+</form>

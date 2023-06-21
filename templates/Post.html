@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index</title>
+</head>
+
+<body>
+  <h1>Post List</h1>
+  문의게시판 페이지입니다용
+  <hr>
+  {% csrf_token %}
+  {% for post in posts %}
+  <table>
+  <a href = '/Main/Post/{{ post.post_id }}/'>
+  {{ post.post_id}}
+  {{ post.user_id}}
+  {{ post.title }}
+  {{ post.date }}
+  </a>
+  </table>
+  <hr>
+  {% endfor %}
+
+  <hr>
+
+  <a href='/Main/Post/New/'>글쓰기</a>
+</body>
+</html>
