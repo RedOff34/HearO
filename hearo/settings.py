@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-w1kwtykgu6-==f@2=6p7!!b0qax2gkr#mw44$r0ntfb%j5l6u!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -142,9 +142,12 @@ MEDIA_URL = '/media/'
 #     },
 # }
 
+LOGIN_URL = '/SignIn/login' # 로그인 필요할시 이동할 경로
 
 LOGIN_REDIRECT_URL = '/SignIn'
 
 AUTH_USER_MODEL = 'SignIn.User'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
+
+# CSRF_TRUSTED_ORIGINS = ['']

@@ -21,8 +21,11 @@ class Comment(models.Model):
     
 class History(models.Model):
     hist_id = models.AutoField(primary_key=True) # 신고 번호
-    user_id = models.CharField(max_length=20) # 신고한 유저 id
-    date = models.DateTimeField(auto_now_add = True) # 신고 시간 년 월 일 시간 까지
+    user = models.ForeignKey(User, on_delete=models.CASCADE) # 신고한 유저 id
+    user_name = models.CharField(max_length =20)
+    user_address = models.CharField(max_length=20)
+    date = models.DateTimeField() # 신고 시간 년 월 일 시간 까지
+    danger_type = models.CharField(max_length=200)
     location = models.CharField(max_length=50) # 신고 당시 위치
     file = models.FileField() # 파일 이름 
     
