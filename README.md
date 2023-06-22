@@ -1,7 +1,5 @@
 # Project : Hear-o(실시간 위험 상황 감지 자동 신고 서비스)
-<p align="cemter"><img src = "https://github.com/AIVLE-School-Third-Big-Project/Big_project_3_9/assets/124108607/9ccd7bd2-54e3-4789-b3be-c0f1f3a533a0" width="6%"></img>
-
-**HEAR On-call** : 서비스가 응급 상황을 감지하면 해당 응급 상황에 대처할 수 있는 대상을 호출하거나 알림을 보내는 역할을 나타냄
+<img src = "https://github.com/AIVLE-School-Third-Big-Project/Big_project_3_9/assets/124108607/9ccd7bd2-54e3-4789-b3be-c0f1f3a533a0" width="6%"></img>**HEAR On-call** : 서비스가 응급 상황을 감지하면 해당 응급 상황에 대처할 수 있는 대상을 호출하거나 알림을 보내는 역할을 나타냄
 
 ## Description
 
@@ -45,3 +43,5 @@
 - Html<br>
 - CSS<br>
 - Python<br>
+- MySQL<br>
+- Django<br>
