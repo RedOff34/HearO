@@ -11,19 +11,19 @@ from django.core.files.base import ContentFile
 
 # Create your views here.
 def Index(request):
-    return render(request, 'MainIndex.html')
+    return render(request, 'main/MainIndex.html')
 
 def MyPage(request):
     
-    return render(request, 'MyPage.html')
+    return render(request, 'main/MyPage.html')
 
 def PostMove(request):
     posts = Post.objects.all()  # 모든 게시물 가져오기
-    return render(request, 'Post.html', {'posts': posts})
+    return render(request, 'main/Post.html', {'posts': posts})
 
 def Settings(request):
     
-    return render(request, 'Settings.html')
+    return render(request, 'main/Settings.html')
 
 def PostNew(request):
     if request.method == "POST":
@@ -35,7 +35,7 @@ def PostNew(request):
             return redirect('/Main/Post/', pk=post.pk)
     else:
         form = PostModelForm()
-    return render(request, 'PostEdit.html', {'form': form})
+    return render(request, 'main/PostEdit.html', {'form': form})
 
 
 def PostView(request, pk):
@@ -56,7 +56,7 @@ def PostView(request, pk):
             return redirect('/Main/Post/{post_id}/'.format(post_id=post.post_id))
     else:
         form = CommentModelForm()
-    return render(request, 'PostView.html', {'post': post, 'file_url': file_url, 'comment':comment, 'form':form})
+    return render(request, 'main/PostView.html', {'post': post, 'file_url': file_url, 'comment':comment, 'form':form})
 
     
 def PostUpdate(request, pk):
@@ -78,7 +78,7 @@ def PostUpdate(request, pk):
             return redirect(f'/Main/Post/{blog.post_id}/', pk=blog.pk)
     else:
         form = PostUpdateForm(instance=blog)
-    return render(request, 'PostUpdate.html', {'form': form})
+    return render(request, 'main/PostUpdate.html', {'form': form})
 
 def PostDelete(request, pk):
     post = get_object_or_404(Post, pk=pk)

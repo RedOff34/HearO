@@ -12,12 +12,12 @@ from django.contrib import messages
 
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
-from SignIn.forms import UserCreationForm, PasswordResetForm
+from SignIn.forms import UserCreationForm
 
 
 # Create your views here.
 def Index(request):
-    return render(request, 'SignInIndex.html')
+    return render(request, 'account/SignInIndex.html')
 
 
 def signup(request):
@@ -108,28 +108,3 @@ def profile_view(request):
     if request.method == 'GET':
         return render(request, 'account/profile.html')
 
-
-
-class PasswordResetView(auth_views.PasswordResetView):
-    """
-    비밀번호 초기화 - 사용자ID, email 입력
-    """
-    template_name = 'account/password_reset.html'
-    # success_url = reverse_lazy('password_reset_done')
-    form_class = PasswordResetForm
-    # email_template_name = 'common/password_reset_email.html'
-
-
-class PasswordResetDoneView(auth_views.PasswordResetDoneView):
-    """
-    비밀번호 초기화 - 메일 전송 완료
-    """
-    template_name = 'account/password_reset_done.html'
-
-
-class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
-    """
-    비밀번호 초기화 - 새로운 비밀번호 입력
-    """
-    template_name = 'account/password_reset_confirm.html'
-    success_url = reverse_lazy('login')

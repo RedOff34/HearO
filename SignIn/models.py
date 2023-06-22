@@ -61,12 +61,3 @@ class User(AbstractBaseUser):
         return self.is_admin
     
     
-    
-    
-# class History(models.Model): # 유저 신고 내역
-#     hist_id = models.AutoField(primary_key=True) # 신고 번호
-#     user = models.ForeignKey(User, on_delete=models.CASCADE) # 신고한 유저 id
-#     date = models.DateTimeField(auto_now_add = True) # 신고 시간 년 월 일 시간 까지
-#     location = models.CharField(max_length=50) # 신고 당시 위치
-#     file = models.FileField() # 파일 이름
-

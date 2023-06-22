@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>마이크 테스트</title>
+  </head>
+
+  <body>
+    <a href="/Main/Post/"><button>게시판으로</button></a>
+    {% comment %} <input type="checkbox" id="chk-hear-mic" /><label for="chk-hear-mic">마이크 소리 듣기</label> {% endcomment %}
+    <div>
+      <button id="record">녹음</button>
+      <button id="stopAll">모두 정지</button>
+    </div>
+    {% csrf_token %}
+    <script>
+      const record = document.getElementById("record");
+      const stopAll = document.getElementById("stopAll");
+      const chkHearMic = document.getElementById("chk-hear-mic");
+
+      let audioCtx;
+      let analyser;
+      let mediaRecorder;
+      let isRecording = false;
+      let chunks = [];
+      let intervalId;
+
+      function makeSound(stream) {
+        const source = audioCtx.createMediaStreamSource(stream);
+
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+      }
+
+      if (navigator.mediaDevices) {
+        const constraints = {
+          audio: true,
+        };
+
+        navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioCtx.createAnalyser();
+
+            mediaRecorder = new MediaRecorder(stream);
+
+            /* chkHearMic.onchange = (e) => {
+              if (e.target.checked) {
+                audioCtx.resume();
+                makeSound(stream);
+              } else {
+                audioCtx.suspend();
+              }
+            }; */
+            
+            record.onclick = () => {
+              if (!isRecording) {
+                isRecording = true;
+                record.style.background = "green";
+                record.style.color = "black";
+                mediaRecorder.start();
+                console.log(mediaRecorder.state);
+                console.log("recorder started");
+                intervalId = setInterval(stopAndStartRecording, 10000); // 10초마다 녹음 정지 및 재시작
+              }
+            };
+
+            stopAll.onclick = () => {
+              if (isRecording) {
+                clearInterval(intervalId);
+                stopRecording();
+              }
+            };
+
+            function stopAndStartRecording() {
+              if (isRecording) {
+                stopRecording();
+                startRecording();
+              }
+            }
+
+            function startRecording() {
+              if (!isRecording) {
+                isRecording = true;
+                mediaRecorder.start();
+                record.style.background = "green";
+                record.style.color = "black";
+                console.log("recorder started");
+              }
+            }
+
+            function stopRecording() {
+              if (isRecording) {
+                isRecording = false;
+                mediaRecorder.stop();
+                record.style.background = "red";
+                record.style.color = "black";
+              }
+            }
+
+            mediaRecorder.ondataavailable = (e) => {
+              chunks.push(e.data);
+            };
+
+            mediaRecorder.onstop = (e) => {
+              const blob = new Blob(chunks, { type: mediaRecorder.mimeType });
+              chunks = [];
+
+              const clipName ="Recording_" + new Date().toISOString().replace(/[:.]/g, "_") + ".wave";
+
+              const a = document.createElement("a");
+              a.href = URL.createObjectURL(blob);
+              a.download = clipName;
+              a.click();
+
+              console.log("recorder stopped");
+            };
+
+          })
+          .catch((err) => {
+            console.log("The following error occurred: " + err);
+          });
+      }
+    </script>
+  </body>
+</html>
