@@ -19,10 +19,9 @@
     - 16개 클래스(중분류)1,000건 이상의 상황‧3,500시간
     - 음성/음향 단일 데이터셋, 음성/음향 복합 데이터셋
 
-## Model
+## Model : BEATs
 
-[**BEATs**](https://github.com/microsoft/unilm/tree/master/beats)<br>
-BEATs는 Audio classification 과제에서 음소 시퀀스로 인해 쉽게 얻을 수 없었던 음향 토크나이저의 문제를 SSL(self-supervised learning)모델의 반복적인 학습으로 해결한 모델이다. 또한 ESC-50 dataset에서 98.1% 정확도를 보이는 SOTA 모델인 audio pretrained framework BEATs를 Pretrained model로 사용하여 Fine-Tuning 하였다.<br>
+[**BEATs**](https://github.com/microsoft/unilm/tree/master/beats)는 Audio classification 과제에서 음소 시퀀스로 인해 쉽게 얻을 수 없었던 음향 토크나이저의 문제를 SSL(self-supervised learning)모델의 반복적인 학습으로 해결한 모델이다. 또한 [**ESC-50 dataset**](https://paperswithcode.com/sota/audio-classification-on-esc-50)에서 98.1% 정확도를 보이는 SOTA 모델인 audio pretrained framework BEATs를 Pretrained model로 사용하여 Fine-Tuning 하였다.<br>
 ![chart (1)](https://github.com/AIVLE-School-Third-Big-Project/Big_project_3_9/assets/124108607/1c5a554a-1d27-41fe-99d6-03c896ff47cd)<br>
 위험 상황 음향 데이터 약 5만개를 사용하여 학습한 결과 약 95% 정확도를 예상할 수 있다.
 
