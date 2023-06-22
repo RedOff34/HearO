@@ -1,15 +1,14 @@
-# Project : Hearo
-
-실시간 음성 및 주변음향 분석을 통한 자동 구조 요청 어플리케이션
+# Project : Hear-o(실시간 위험 상황 감지 자동 신고 서비스)
+**HEAR On-call** : 서비스가 응급 상황을 감지하면 해당 응급 상황에 대처할 수 있는 대상을 호출하거나 알림을 보내는 역할을 나타냄
 
 ## Description
 
-위급 상황 발생 시 안전 확보가 어려운 1인가구의 증가와 범죄에 노출되기 쉬운 여성,아동 등 사회적 취약계층을 겨냥한 범죄가 증가함에 따라 개인의 안전 확보의 중요성이 부각되고 있습니다.
-이에 따라 예상치 못한 위급 상황 발생 시 스스로 안전 확보가 어려운 모든 국민들을 보호하기 위해 인공지능 모델을 활용하여 실시간으로 음성 및 주변음향을 분석, 위급상황으로 판단될 때 자동으로 구조 요청을 하는 어플리케이션입니다.
+위급 상황 발생 시 안전 확보가 어려운 1인가구의 증가와 범죄에 노출되기 쉬운 여성,아동 등 사회적 취약계층을 겨냥한 범죄가 증가함에 따라 개인의 안전 확보의 중요성이 부각되고 있다.
+이에 따라 예상치 못한 위급 상황 발생 시 스스로 안전 확보가 어려운 모든 국민들을 보호하기 위해 인공지능 모델을 활용하여 실시간으로 음성 및 주변음향을 분석, 위급상황으로 판단될 때 자동으로 구조 요청을 하는 어플리케이션이다.
 
 ## Dataset
 
-**AI HUB**(https://aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&dataSetSn=170) 에 공개된 위급상황 음성/음향 데이터 35만여개 중 5만개 추출하여 사용
+**AI HUB**(https://aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&dataSetSn=170) 에 공개된 위급상황 음성/음향 데이터 35만여개 중 5만개를 추출하여 사용
 
 ### 위급 상황 음성/음향 데이터
     - 성별 : 남성, 여성
@@ -21,9 +20,9 @@
 
 ## Model
 
-**BEATs**(https://github.com/microsoft/unilm/tree/master/beats)
-<br>Self-Supervised Learning (SSL) 모델로 
-
+**BEATs**(https://github.com/microsoft/unilm/tree/master/beats)<br>
+BEATs는 Audio classification 과제에서 음소 시퀀스로 인해 쉽게 얻을 수 없었던 음향 토크나이저의 문제를 SSL(self-supervised learning)모델의 반복적인 학습으로 해결한 모델이다. 또한 ESC-50 dataset에서 98.1% 정확도를 보이는 SOTA 모델인 audio pretrained framework BEATs를 Pretrained model로 사용하여 Fine-Tuning 하였다.<br>
+위험 상황 음향 데이터 약 5만개를 사용하여 학습한 결과 약 95% 정확도를 예상할 수 있다.
 
 ## Scenario
 1. 사용자 : 84세 분당 혼자 거주하는 여성<br>
