@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.core.files.storage",
     "Main",
     "SignIn",
+    "app",
 ]
 
 MIDDLEWARE = [
@@ -151,3 +152,9 @@ AUTH_USER_MODEL = 'SignIn.User'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
 # CSRF_TRUSTED_ORIGINS = ['']
+
+
+
+
+
+

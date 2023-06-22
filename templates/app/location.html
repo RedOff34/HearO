@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+{% comment %} <button onclick="getLocation()">Try It</button> {% endcomment %}
+
+<p id="demo"></p>
+
+<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  API_KEY = 'AIzaSyD1uFlkGyGTJc9s7kQwaKKYnvNVsoqFNGQ'
+  var geocodingUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + position.coords.latitude + "," + position.coords.longitude + "&key=" + API_KEY;
+  fetch(geocodingUrl)
+    .then(response => response.json())
+    .then(data => {
+      var address = data.results[0].formatted_address;
+      x.innerHTML += "<br>Address: " + address;
+
+      var xhr_address = new XMLHttpRequest();
+      var url_address = "../save_location/";
+      xhr_address.open("POST", url_address, true);
+      xhr_address.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr_address.onreadystatechange = function () {
+          if (xhr_address.readyState === 4 && xhr_address.status === 200) {
+              console.log(xhr_address.responseText);
+          }
+      };
+      var data_address = "address=" + address;
+      xhr_address.send(data_address);
+    });
+}
+
+window.onload = getLocation;
+
+</script>
+
+</body>
+</html>
