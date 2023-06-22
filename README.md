@@ -1,6 +1,6 @@
 # Project : Hear-o(실시간 위험 상황 감지 자동 신고 서비스)
+<img src = "https://private-user-images.githubusercontent.com/124108607/247852961-0f6cd34a-c55d-4e34-9e4b-3e567dfe6993.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJrZXkxIiwiZXhwIjoxNjg3NDE4NTM3LCJuYmYiOjE2ODc0MTgyMzcsInBhdGgiOiIvMTI0MTA4NjA3LzI0Nzg1Mjk2MS0wZjZjZDM0YS1jNTVkLTRlMzQtOWU0Yi0zZTU2N2RmZTY5OTMucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQUlXTkpZQVg0Q1NWRUg1M0ElMkYyMDIzMDYyMiUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyMzA2MjJUMDcxNzE3WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9NzA0MWFkNzc3ODNiYTVhYzFjMDEyM2YxY2I5Y2U5OWQ0MjRlNTRmNjhlMDc3YzU5MzBmZGVkMDFkODJiYmYwMSZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmYWN0b3JfaWQ9MCZrZXlfaWQ9MCZyZXBvX2lkPTAifQ.0wy1wjUB_oAS4AdJuujkpru3qsAuXfKu_60YimcWkAw" width="6%"></img>
 **HEAR On-call** : 서비스가 응급 상황을 감지하면 해당 응급 상황에 대처할 수 있는 대상을 호출하거나 알림을 보내는 역할을 나타냄
-
 
 ## Description
 
