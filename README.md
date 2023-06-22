@@ -5,7 +5,7 @@
 ## Description
 
 위급 상황 발생 시 안전 확보가 어려운 1인가구의 증가와 범죄에 노출되기 쉬운 여성,아동 등 사회적 취약계층을 겨냥한 범죄가 증가함에 따라 <br>개인의 안전 확보의 중요성이 부각되고 있습니다.
-이에 따라 예상치 못한 위급 상황 발생 시 스스로 안전 확보가 어려운 모든 국민들을 보호하기 위해 <br>인공지능 모델을 활용하여 실시간으로 음성 및 주변음향을 분석, 위급상황으로 판단될 때 자동으로 구조 요청을 하는 어플리케이션입니다.
+이에 따라 예상치 못한 위급 상황 발생 시 스스로 안전 확보가 어려운 모든 국민들을 보호하기 <br>위해 인공지능 모델을 활용하여 실시간으로 음성 및 주변음향을 분석, 위급상황으로 판단될 때 자동으로 구조 요청을 하는 어플리케이션입니다.
 
 ## Dataset
 
@@ -35,18 +35,3 @@
 <br>- Html
 <br>- CSS
 <br>- Python
-
-<div align=center><h1>📚 STACKS</h1></div>
-<div align=center> 
-  <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"> 
-  <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
-  <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
-  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
-  <br>
-  <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
-  <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
-  <img src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white">
-  <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white">
-  <br>
-</div>
-
