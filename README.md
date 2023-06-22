@@ -1,5 +1,6 @@
 # Project : Hear-o(실시간 위험 상황 감지 자동 신고 서비스)
-<img src = "https://private-user-images.githubusercontent.com/124108607/247852961-0f6cd34a-c55d-4e34-9e4b-3e567dfe6993.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJrZXkxIiwiZXhwIjoxNjg3NDE4NTM3LCJuYmYiOjE2ODc0MTgyMzcsInBhdGgiOiIvMTI0MTA4NjA3LzI0Nzg1Mjk2MS0wZjZjZDM0YS1jNTVkLTRlMzQtOWU0Yi0zZTU2N2RmZTY5OTMucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQUlXTkpZQVg0Q1NWRUg1M0ElMkYyMDIzMDYyMiUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyMzA2MjJUMDcxNzE3WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9NzA0MWFkNzc3ODNiYTVhYzFjMDEyM2YxY2I5Y2U5OWQ0MjRlNTRmNjhlMDc3YzU5MzBmZGVkMDFkODJiYmYwMSZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmYWN0b3JfaWQ9MCZrZXlfaWQ9MCZyZXBvX2lkPTAifQ.0wy1wjUB_oAS4AdJuujkpru3qsAuXfKu_60YimcWkAw" width="6%"></img>
+<p align="cemter"><img src = "https://github.com/AIVLE-School-Third-Big-Project/Big_project_3_9/assets/124108607/9ccd7bd2-54e3-4789-b3be-c0f1f3a533a0" width="6%"></img>
+
 **HEAR On-call** : 서비스가 응급 상황을 감지하면 해당 응급 상황에 대처할 수 있는 대상을 호출하거나 알림을 보내는 역할을 나타냄
 
 ## Description
@@ -23,7 +24,7 @@
 
 [**BEATs**](https://github.com/microsoft/unilm/tree/master/beats)는 Audio classification 과제에서 음소 시퀀스로 인해 쉽게 얻을 수 없었던 음향 토크나이저의 문제를 SSL(self-supervised learning)모델의 반복적인 학습으로 해결한 모델이다. 또한 [**ESC-50 dataset**](https://paperswithcode.com/sota/audio-classification-on-esc-50)에서 98.1% 정확도를 보이는 SOTA 모델인 audio pretrained framework BEATs를 Pretrained model로 사용하여 Fine-Tuning 하였다.<br>
 ![chart (1)](https://github.com/AIVLE-School-Third-Big-Project/Big_project_3_9/assets/124108607/1c5a554a-1d27-41fe-99d6-03c896ff47cd)<br>
-위험 상황 음향 데이터 약 5만개를 사용하여 학습한 결과 약 95% 정확도를 예상할 수 있다.
+**위험 상황 음향 데이터 약 5만개를 사용하여 학습한 결과 약 95% 정확도를 예상할 수 있다.**
 
 ## Scenario
 1. 사용자 : 84세 분당 혼자 거주하는 여성<br>
