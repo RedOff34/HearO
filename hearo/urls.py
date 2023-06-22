@@ -35,5 +35,6 @@ urlpatterns = [
     path('Info/', Info), # 정보화면
     path('SignIn/',include('SignIn.urls')), # 회원가입 페이지
     path('Main/',include('Main.urls')), # 메인 페이지
+    path('app/', include('app.urls')), # 어플기능
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

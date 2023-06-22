@@ -8,7 +8,9 @@ from django.utils import timezone
 from django.contrib import messages
 from django.http import HttpResponseForbidden
 from django.core.files.base import ContentFile
-
+from django.contrib.auth.decorators import login_required
+from Main.models import History
+from django.core import serializers
 # Create your views here.
 def Index(request):
     return render(request, 'main/MainIndex.html')
@@ -116,3 +118,18 @@ def save_audio(request):
             return JsonResponse({'message': 'File save failed'}, status=400)
     else:
         return JsonResponse({'message': 'Invalid request method'}, status=400)
+    
+    
+    
+ 
+@login_required
+def get_user_history(request):
+    user = request.user
+
+    # 로그인된 사용자의 History 객체들만 가져옵니다.
+    user_history = History.objects.filter(user=user)
+
+    # JSON 응답을 위해 QuerySet을 직렬화합니다.
+    user_history_json = serializers.serialize('json', user_history)
+
+    return HttpResponse(user_history_json, content_type='application/json')

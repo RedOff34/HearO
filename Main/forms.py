@@ -6,7 +6,7 @@ class PostModelForm(forms.ModelForm):
         model = Post
         fields = ['title', 'content', 'file']
         widgets = {
-            'file': forms.ClearableFileInput(attrs={'multiple': True}),
+            'file': forms.ClearableFileInput(attrs={'multiple': False}),
         }
         labels = {
             'file': '파일 첨부',

@@ -18,4 +18,5 @@ urlpatterns = [
     path('Post/Delete/<int:pk>/', views.PostDelete, name = 'PostDelete'),
     path('Post/DeleteComment/<int:comment_id>/', views.DeleteComment, name='DeleteComment'),
     path('save-audio/', views.save_audio, name='save_audio'),
+    path('userhistory/', views.get_user_history, name='get_user_history'),
 ]
