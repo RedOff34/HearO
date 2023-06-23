@@ -17,8 +17,6 @@ class AudioDataset(Dataset):
         self.transform = transform
         self.data_frame = data_frame
 
-        self.label_encoder = LabelEncoder()
-        self.label_encoder.fit(self.data_frame["category"])
 
     def __len__(self):
         return len(self.data_frame)
@@ -35,8 +33,6 @@ class AudioDataset(Dataset):
         if self.transform:
             sig_t = self.transform(sig_t)
 
-        # Encode label as integer
-        label = self.label_encoder.transform([label])[0]
 
         return sig_t, padding_mask, label
 
