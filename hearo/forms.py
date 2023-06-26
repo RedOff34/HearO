@@ -7,4 +7,4 @@ class LoginForm(forms.Form):
     
     class Meta:
         model = User
-        fields = ('user_id', 'password')
+        fields = ('user_id', 'password') 

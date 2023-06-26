@@ -36,7 +36,7 @@ class User(AbstractBaseUser):
     phone_num = models.CharField(max_length=11)
     emergency = models.CharField(max_length=11)
     address = models.CharField(max_length=50)
-    gender = models.CharField(max_length=5)
+    gender = models.CharField(max_length=10)
     birth = models.DateField()
 
     is_active = models.BooleanField(default=True)

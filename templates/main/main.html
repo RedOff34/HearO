@@ -1,0 +1,299 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        .hearo{
+            width: 27.5px;
+            height: 27.5px;
+        }
+        .sos{
+            width:35px;
+            height:30px;
+        }
+        .gps{
+            width:35px;
+            height:35px;
+        }
+        .switch{
+            width:70px;
+            height:70px;
+        }
+        .decision{
+            width:75px;
+            height:75px;
+        }
+        .setting{
+            width: 30px;
+            height: 30px;
+        }
+        .info{
+            width: 30px;
+            height: 30px;
+        }
+        #imageContainer img{
+            display: none;
+        }
+        #imageContainer img.active{
+            display: block;
+        }
+        #sentenceContainer{
+            text-align: center;
+        }
+        
+    </style>
+
+    <head>
+        <meta charset="utf-8">
+        <title>HearO</title>
+        <link rel="shortcut icon" href="{% static 'images/hearo_logo_3.png' %}" class="hearo">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Free HTML Templates" name="keywords">
+        <meta content="Free HTML Templates" name="description">
+
+        <!-- Favicon -->
+        {% comment %} <link href="img/favicon.ico" rel="icon"> {% endcomment %}
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="{%static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    </head>
+
+    <div>
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
+            <a href="{% url 'Main:index' %}" class="navbar-brand p-0">
+                <h1 class="m-0 text-uppercase text-primary"><img class="hearo" src="{% static 'images/hearo_logo_3.png' %}"></i>HearO</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0 me-n3">
+                  <a href="{% url 'Main:index' %}" class="nav-item nav-link active">홈</a>
+                  <li class="nav-item">
+                      {% if user.is_authenticated %}
+                      <a class="nav-link" href="{% url 'SignIn:logout' %}">{{ user.user_id }} (로그아웃)</a>
+                      {% else %}
+                      <a class="nav-link" href="{% url 'first' %}">로그인</a>
+                      {% endif %}
+                  </li>
+                  <a href="{% url 'SignIn:pia' %}" class="nav-item nav-link">회원가입</a>
+                  <a href="{% url 'Main:info' %}" class="nav-item nav-link">HearO란?</a>
+                  <a href="{% url 'Main:Post' %}" class="nav-item nav-link">게시판</a>
+                  <a href="testimonial.html" class="nav-item nav-link">신고접수</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">마이페이지</a>
+                        <div class="dropdown-menu m-0">
+                          <a href="{% url 'SignIn:profile' %}" class="dropdown-item">회원정보</a>
+                            <a href="/Main/userhistory/" class="dropdown-item">신고내역</a>
+                            <a href="/Main/Settings/" class="dropdown-item">환경설정</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar End -->
+       
+        <!-- OnOff Button Start -->
+        <div id="imageContainer">
+          <img id="sos_on" src="{% static 'img\SOS_on.png'%}" style="width: 25rem;" >
+          <img id="sos_off" src="{%static 'img\SOS_off.png'%}"  style="width: 25rem;" class="active">
+      </div>
+      <div id="sentenceContainer">
+          &nbsp; <p id="blinkk" class="blink vc hc" style="font-size: 15px;">소리를 통해 위급상황을 감지하고 있습니다.</p>
+          &nbsp; <p id="blinkkk" class="vc hc active" style="font-size: 15px;">위급상황을 감지하고 싶으면 눌러주세요.</p> 
+      </div>
+      
+        <!-- Setting & Info Button Start -->
+        <div>
+          <img onClick="location.href='setup.html'" src="https://cdn.icon-icons.com/icons2/1365/PNG/512/settings_89381.png" class="setting">
+          <img onClick="location.href='about.html'" src="https://cdn.icon-icons.com/icons2/67/PNG/512/info_13213.png" class="info">
+  
+      </div> 
+    </div>
+      <!-- Setting & Info Button End -->
+       <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+        <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+        <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+
+        <!-- Template Javascript -->
+        <script src="{% static 'js/main.js' %}"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <!--on/off-->
+          
+      {% csrf_token %}
+      <script>
+        const sos_off = document.getElementById("sos_off");
+        const sos_on = document.getElementById("sos_on");
+  
+        let audioCtx;
+        let analyser;
+        let mediaRecorder;
+        let isRecording = false;
+        let chunks = [];
+        let intervalid;
+  
+        function makeSound(stream) {
+          const source = audioCtx.createMediaStreamSource(stream);
+          source.connect(analyser);
+          analyser.connect(audioCtx.destination);
+        }
+  
+        if (navigator.mediaDevices) {
+          const constraints = {
+            audio: true,
+          };
+  
+          navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+              audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+              analyser = audioCtx.createAnalyser();
+  
+              mediaRecorder = new MediaRecorder(stream);
+  
+  
+              sos_off.onclick = () => {
+                if (!isRecording) {
+                  isRecording = true;
+                  mediaRecorder.start();
+                  console.log(mediaRecorder.state);
+                  console.log("recorder started");
+                  intervalid = setInterval(startRecording, 500); // 0.5초뒤 함수 호출
+                  setTimeout(stopRecording, 10000); // 10초 후 정지
+                }
+              };
+  
+  
+              // 이벤트 추가
+              sos_on.onclick = () => {
+                // 모두 정지 버튼 클릭시 이벤트
+                if (isRecording) {
+                  clearInterval(intervalid); // 반복 녹음 중지
+                  stopRecording(); // 현재 녹음 정지
+                }
+              };
+              // 녹음 시작 함수
+              function startRecording() {
+                if (!isRecording) {
+                  isRecording = true;
+                  mediaRecorder.start();
+                  console.log("recorder started");
+                  setTimeout(stopRecording, 10000); // 10초 후 정지
+                }
+              }
+  
+              function stopRecording() {
+                // 정지 버튼 함수
+                if (isRecording) {
+                  isRecording = false;
+                  mediaRecorder.stop();
+                }
+              }
+  
+              mediaRecorder.onstop = (e) => {
+                // 녹음 정지 후 동작하는것
+                const clipName =
+                  "Recording_" + new Date().toISOString().replace(/[:.]/g, "_");
+                const clipContainer = document.createElement("article");
+                const audio = document.createElement("audio");
+  
+  
+                clipContainer.classList.add("clip");
+                audio.setAttribute("controls", "");
+  
+  
+                audio.controls = true;
+                const blob = new Blob(chunks, {
+                  type: "audio/wave codecs=opus",
+                });
+                chunks = [];
+                const audioURL = URL.createObjectURL(blob);
+                audio.src = audioURL;
+                console.log("recorder stopped");
+  
+                const formData = new FormData();
+                formData.append("audio_file", blob, clipName + ".wave");
+  
+                // CSRF 토큰 가져오기
+                const csrfToken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+  
+                const xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                  if (xhr.status === 200) {
+                    console.log("파일 저장 성공");
+                  } else {
+                    console.log("파일 저장 실패");
+                  }
+                };
+                xhr.open("POST", "/Main/save-audio/", true);
+                // CSRF 토큰 설정
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+                xhr.send(formData);
+              };
+  
+              mediaRecorder.ondataavailable = (e) => {
+                chunks.push(e.data);
+              };
+            })
+            .catch((err) => {
+              console.log("The following error occurred: " + err);
+            });
+        }
+      
+        document.addEventListener("DOMContentLoaded", function() {
+      
+          /*웹페이지 열었을 때*/
+                      $("#sos_off").show();
+                      $("#sos_on").hide();
+                      $("#blinkkk").show();
+                      $("#blinkk").hide();
+                      
+   
+                      /*on을 클릭했을 때 off를 보여줌*/
+                      $("#sos_on").click(function(){
+                          $("#sos_on").hide();
+                          $("#sos_off").show();
+                          $("#blinkk").hide();
+                          $("#blinkkk").show();
+                          document.getElementById("status").innerHTML = "off";
+                      });
+      
+                      /*off를 클릭했을 때 on을 보여줌*/
+                      $("#sos_off").click(function(){
+                          $("#sos_on").show();
+                          $("#sos_off").hide();
+                          $("#blinkkk").hide();
+                          $("#blinkk").show();
+                          
+                          document.getElementById("status").innerHTML = "on";
+                      });
+  
+  
+  
+        });
+      </script>
+
+        
+  </div>
+
+  {% include "app/location.html" %} 
+
+      
+</html>

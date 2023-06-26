@@ -16,8 +16,7 @@ def Index(request):
     return render(request, 'main/main.html')
 def Info(request):
     return render(request, 'main/info.html')
-def MyPage(request):
-    
+def MyPage(request): 
     return render(request, 'main/MyPage.html')
 
 def PostMove(request):

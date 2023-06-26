@@ -15,4 +15,6 @@ def Login(request):
             return redirect('/Main/')
     else:
         form = LoginForm()
-    return render(request, 'index.html', {'form': form})
+    return render(request, 'index.html', {'form': form}) 
+
+

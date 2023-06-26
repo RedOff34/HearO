@@ -1,26 +1,194 @@
-<table>
-    <tr>
-        <td>아이디</td>
-        <td>{{ user.user_id }}</td>
-    </tr>
-    <tr>
-        <td>이메일</td>
-        <td>{{ user.email }}</td>
-    </tr>
-    <tr>
-        <td>이름</td>
-        <td>{{ user.name }}</td>
-    </tr>
-    <tr>
-        <td>주소</td>
-        <td>{{ user.address }}</td>
-    </tr>
-    <tr>
-        <td>연락처</td>
-        <td>{{ user.phone_num }}</td>
-    </tr>
-    <tr>
-        <td>비상연락처</td>
-        <td>{{ user.emergency }}</td>
-    </tr>
-</table>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        .hearo{
+            width: 27.5px;
+            height: 27.5px;
+        }
+        .sos{
+            width:35px;
+            height:30px;
+        }
+        .gps{
+            width:35px;
+            height:35px;
+        }
+        .switch{
+            width:70px;
+            height:70px;
+        }
+        .decision{
+            width:75px;
+            height:75px;
+        }
+        #show{
+            cursor:grab;
+        }
+    </style>
+<head>
+    <meta charset="utf-8">
+    <title>HearO</title>
+    <link rel="shortcut icon" href="{% static 'images/hearo_logo_3.png' %}" class="hearo">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    {% comment %} <link href="img/favicon.ico" rel="icon"> {% endcomment %}
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<div>
+
+
+{% include "navbar.html" %}
+
+
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-dark p-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-4 text-white">회원정보</h1>
+                <a>Member Info</a>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+    
+    <!--info Start -->
+<body>
+    <script>
+        document.querySelector("#delete-btn").addEventListener("click", function(event){
+            var result = confirm("정말로 회원 탈퇴하시겠습니까?");
+            if(result) {
+                document.getElementById('delete-form').submit();
+            }
+        });
+    </script>
+    <div class="container-fluid bg-secondary px-0" >
+        
+        <br><br>
+        <div class="row g-0">
+            <div class="col-lg-6 py-6 px-5">
+                <form>
+                    <div class="row g-3">
+                      <form method="post" action="{% url 'SignIn:profile' %}">
+                        {% csrf_token %}
+                        
+                        <div class="col-12">
+                            <label for="form-floating-2">아이디</label>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="form-floating-2" value="{{ user.user_id }}" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="form-floating-1">이름</label>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="form-floating-2" value="{{ user.name }}" readonly>
+                                </div>
+                            </div>
+                    
+                            <div class="col-12">
+                                <label for="form-floating-2">이메일</label>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="form-floating-2" value="{{ user.email }}" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="form-floating-2">성별</label>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="form-floating-2" value="{{ user.gender }}" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="form-floating-2">생년월일</label>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="form-floating-2" value="{{ user.birth }}" readonly>
+                                </div>
+                            </div>
+                            
+      
+        
+                            <div class="col-12">
+                                <label for="form-floating-3">연락처</label>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="form-floating-2" value="{{ user.phone_num }}" readonly>
+                                </div>
+                            </div>
+        
+                            <div class="col-12">
+                                <label for="form-floating-3">비상연락처</label>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="form-floating-2" value="{{ user.emergency }}" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="form-floating-3">주소</label>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="form-floating-2" value="{{ user.address }}" readonly>
+                                </div>
+                            </div>
+                           
+                            </div>
+                            <div class="col-12 hc d-flex justify-content-between" style="width: 350px;">
+                                <button onClick="location.href='{% url 'SignIn:update' %}'" class="btn btn-primary" type="button">수정하기</button>
+                                <button onClick="location.href='{% url 'SignIn:password' %}'" class="btn btn-primary" type="button">비밀번호 변경</button>
+                                                           
+                                    <form action="{% url 'SignIn:delete' %}" method='POST'>
+                                        {% csrf_token %}
+                                        <input type='submit' class="btn btn-primary" value='회원탈퇴'>
+                                    </form>
+                                   
+                                </div>
+                            </div>
+
+                          <div class="background" >                                                                               
+
+                        </div>                                          
+                    </div>                     
+            </div>          
+        </div>    
+    </div>
+    <!-- Sign Up End -->
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <!--popup Javascript-->
+
+    </body>
+    </html>
+    
