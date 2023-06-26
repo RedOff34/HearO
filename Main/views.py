@@ -13,8 +13,9 @@ from Main.models import History
 from django.core import serializers
 # Create your views here.
 def Index(request):
-    return render(request, 'main/MainIndex.html')
-
+    return render(request, 'main/main.html')
+def Info(request):
+    return render(request, 'main/info.html')
 def MyPage(request):
     
     return render(request, 'main/MyPage.html')

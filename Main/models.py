@@ -31,4 +31,4 @@ class History(models.Model):
     
 
 class Audio(models.Model):
-    audio = models.FileField(upload_to='audio/')
+    audio = models.FileField(upload_to='')

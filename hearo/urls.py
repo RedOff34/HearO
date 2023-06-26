@@ -31,7 +31,7 @@ def Info(request):
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', index), # 맨 처음들어왔을때 화면
+    path('', index, name='first'), # 맨 처음들어왔을때 화면
     path('Info/', Info), # 정보화면
     path('SignIn/',include('SignIn.urls')), # 회원가입 페이지
     path('Main/',include('Main.urls')), # 메인 페이지

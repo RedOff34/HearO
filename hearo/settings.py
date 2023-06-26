@@ -28,7 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,6 +47,7 @@ INSTALLED_APPS = [
     "Main",
     "SignIn",
     "app",
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +126,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -143,16 +147,23 @@ MEDIA_URL = '/media/'
 #     },
 # }
 
-LOGIN_URL = '/SignIn/login' # 로그인 필요할시 이동할 경로
+LOGIN_URL = '/' # 로그인 필요할시 이동할 경로
 
-LOGIN_REDIRECT_URL = '/SignIn'
+LOGIN_REDIRECT_URL = '/Main'
 
 AUTH_USER_MODEL = 'SignIn.User'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
-# CSRF_TRUSTED_ORIGINS = ['']
+CSRF_TRUSTED_ORIGINS = ['https://*.ngrok-free.app']
 
+
+# AWS Settings
+AWS_ACCESS_KEY_ID = 'AKIATTZIKJQIZZDCF6GB'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'hearo-sound'
+AWS_S3_REGION_NAME = 'ap-northeast-2' 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 

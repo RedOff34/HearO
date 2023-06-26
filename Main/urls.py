@@ -10,7 +10,8 @@ app_name = 'Main'
 urlpatterns = [
     path('', views.Index, name='index'), # 메인 페이지
     path('MyPage/', views.MyPage), # 마이 페이지
-    path('Post/', views.PostMove), # 문의 게시판
+    path('info/', views.Info, name='info'), # 문의 게시판
+    path('Post/', views.PostMove, name='Post'), # 문의 게시판
     path('Settings/', views.Settings), # 설정
     path('Post/New/', views.PostNew, name = 'PostNew'),
     path('Post/<int:pk>/', views.PostView, name = 'PostView'),
