@@ -60,3 +60,5 @@
 - Python<br>
 - MySQL<br>
 - Django<br>
+
+## 만든 사람들
