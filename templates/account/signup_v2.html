@@ -13,14 +13,15 @@
         </div>
         <!-- Page Header End -->
     
-        
+<body>      
         <!-- Sign Up Start -->
 <div class="container-fluid bg-secondary px-0"><br><br>
     <div class="row g-0">
         <div class="col-lg-6 py-6 vc hc">
+            <div class="row g-3">
             <form method="post" action="{% url 'SignIn:signup' %}">
                 {% csrf_token %}
-                {% comment %} {% include "form_errors.html" %} {% endcomment %}
+                {% include "form_errors.html" %}
 
                 <div class="row g-3">
                     <div class="col-8">
@@ -174,7 +175,7 @@
                         <button type="submit" class="btn btn-primary w-100 py-3">가입하기</button>
                     </div>
                 </div>
-                
+            </div>
             </form>
         </div>
     </div>

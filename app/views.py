@@ -2,16 +2,18 @@ from django.shortcuts import render
 import os
 import requests
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse, HttpResponseBadRequest
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
 from .models import Location
 from django.contrib.auth.decorators import login_required
 from Main.models import History
 from django.utils import timezone
-
+from django.conf import settings
+import boto3
+from hearo.utils import download_from_s3
 @login_required
 @csrf_exempt
 def show_location(request):
-    return render(request, 'app/location.html')
+    return render(request, 'app/location.html')  
 
 @login_required  
 @csrf_exempt
@@ -58,3 +60,9 @@ def get_user_danger(request):
         }
     
     return JsonResponse(danger_info)
+
+
+def my_view(request):
+    download_from_s3('cat.jpg', 'cat.jpg')
+    return HttpResponse("File downloaded successfully.")
+
