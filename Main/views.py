@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from Main.models import History
 from django.core import serializers
 # Create your views here.
+@login_required
 def Index(request):
     return render(request, 'main/main.html')
 def Info(request):
@@ -112,7 +113,13 @@ def save_audio(request):
         audio_file = request.FILES.get('audio_file')
         if audio_file:
             audio = Audio()
-            audio.audio.save(audio_file.name, ContentFile(audio_file.read()))
+            user_id = request.user.user_id  # 현재 로그인된 사용자의 ID를 가져옵니다.
+
+            # 파일 이름에 사용자 ID를 추가합니다.
+            file_name = f"{user_id}_{audio_file.name}"
+            
+            audio.audio.save(file_name, ContentFile(audio_file.read()))
+            return JsonResponse({'message': 'File saved successfully'})
             return JsonResponse({'message': 'File saved successfully'})
         else:
             return JsonResponse({'message': 'File save failed'}, status=400)

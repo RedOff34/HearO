@@ -31,7 +31,6 @@ def save_location(request):
 @csrf_exempt
 def get_user_danger(request):
     user = request.user
-
     # 최신 위치를 가져옵니다.
     latest_location = Location.objects.filter(user=user).order_by('-timestamp').first()
 
