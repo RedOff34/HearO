@@ -93,7 +93,7 @@
                                     {{ form.name }}
                                     <br>
                                     {% for error in form.name.errors %}
-                                    <div class="error" style="color: red;">
+                                    <div class="error" style="color: #F3525A;">
                                          {{ error }}
                                     </div>
                                     {% endfor %}
@@ -104,14 +104,26 @@
                                 <label for="form-floating-2">이메일</label>
                                 <div class="form-floating">
                                     {{ form.email }}
+                                    <br>
+                                    {% for error in form.email.errors %}
+                                    <div class="error" style="color: #F3525A;">
+                                         {{ error }}
+                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
-      
-        
+                            
+                            
                             <div class="col-12">
                                 <label for="form-floating-3">연락처</label>
                                 <div class="form-floating">
                                     {{ form.phone_num }}
+                                    <br>
+                                    {% for error in form.phone_num.errors %}
+                                    <div class="error" style="color: #F3525A;">
+                                         {{ error }}
+                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
         

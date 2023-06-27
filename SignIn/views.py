@@ -14,13 +14,14 @@ from django.urls import reverse_lazy
 from SignIn.forms import UserCreationForm
 from django.views import View
 from .models import User
-
+from hearo.utils import logout_required
 # Create your views here.
 def Index(request):
     return render(request, 'account/SignInIndex.html')
 
+@logout_required
 def PIA(request):
-    # if request.method == "POST":
+    # if request.method == "POST": 
     #     agreed_to_terms1 = request.POST.get('agreement', False) == 'accepted'
     #     agreed_to_terms2 = request.POST.get('privacy', False) == 'accepted'
 
@@ -30,6 +31,7 @@ def PIA(request):
 
     return render(request, 'account/PIA.html')
 
+@logout_required
 def signup(request):
     if request.method == "POST":
         form = forms.UserCreationForm(request.POST)
@@ -42,7 +44,7 @@ def signup(request):
             return redirect('/Main')
     else:
         form = forms.UserCreationForm()
-    return render(request, 'account/signup.html', {'form': form})
+    return render(request, 'account/signup_v2.html', {'form': form})
 
 
 @login_required
@@ -64,6 +66,7 @@ class LoginView(auth_views.LoginView):
         if request.user.is_authenticated:
             return redirect('Main:index')
         return super().dispatch(request, *args, **kwargs)
+    
 
 @require_POST
 @login_required
