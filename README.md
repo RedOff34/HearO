@@ -63,6 +63,7 @@
 
 ## 만든 사람들
 - AI
+
 이준민
 Transformer 기반 audio classfication modeling
 정재웅
