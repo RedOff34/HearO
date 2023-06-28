@@ -21,8 +21,8 @@ class BEATsTransferLearningModel(pl.LightningModule):
         batch_size: int = 32,
         lr: float = 1e-3,
         lr_scheduler_gamma: float = 1e-1,
-        num_workers: int = 8,
-        model_path: str = "/content/drive/MyDrive/빅프/model/BEATs_iter3_plus_AS2M.pt",
+        num_workers: int = 6,
+        model_path: str = "./model/BEATs_iter3_plus_AS2M.pt",
         **kwargs,
     ) -> None:
         """TransferLearningModel.
@@ -67,6 +67,7 @@ class BEATsTransferLearningModel(pl.LightningModule):
 
     def forward(self, x, padding_mask=None):
         """Forward pass. Return x"""
+
         # Get the representation
         if padding_mask != None:
             x, _ = self.beats.extract_features(x, padding_mask)
@@ -86,10 +87,8 @@ class BEATsTransferLearningModel(pl.LightningModule):
         return self.loss_func(lprobs, labels)
 
     def training_step(self, batch, batch_idx):
-        print(batch)
         # 1. Forward pass:
         x, padding_mask, y_true = batch
-        print(x.shape)
         y_probs = self.forward(x, padding_mask)
 
         # 2. Compute loss

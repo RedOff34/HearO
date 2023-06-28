@@ -59,7 +59,7 @@ class BEATsConfig:
         # label predictor
         self.finetuned_model: bool = False  # whether the model is a fine-tuned model.
         self.predictor_dropout: float = 0.1  # dropout probability for the predictor
-        self.predictor_class: int = 14  # target class number for the predictor
+        self.predictor_class: int = 527  # target class number for the predictor
 
         if cfg is not None:
             self.update(cfg)
@@ -124,7 +124,7 @@ class BEATs(nn.Module):
         fbanks = []
         for waveform in source:
             waveform = waveform.unsqueeze(0) * 2 ** 15
-            fbank = ta_kaldi.fbank(waveform, num_mel_bins=128, sample_frequency=44100, frame_length=25, frame_shift=10)
+            fbank = ta_kaldi.fbank(waveform, num_mel_bins=128, sample_frequency=16000, frame_length=25, frame_shift=10)
             fbanks.append(fbank)
         fbank = torch.stack(fbanks, dim=0)
         fbank = (fbank - fbank_mean) / (2 * fbank_std)
