@@ -9,7 +9,10 @@ from Main.models import History
 from django.utils import timezone
 from django.conf import settings
 import boto3
-from hearo.utils import download_from_s3
+
+        
+
+#from hearo.utils import download_from_s3
 @login_required
 @csrf_exempt
 def show_location(request):

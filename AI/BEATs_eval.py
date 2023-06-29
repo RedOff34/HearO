@@ -15,6 +15,6 @@ def predict(model, data_path):
         sig_t = sig_t.reshape(-1,10*sr)
         result = model(sig_t)
         prob = nnf.softmax(result, dim=1)
-        prob = prob.topk(1,dim=1)[0]*100
+        prob = int(prob.topk(1,dim=1)[0]*100)
         result = int(result.argmax(1))
         return [prob, result]

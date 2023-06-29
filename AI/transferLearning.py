@@ -10,7 +10,7 @@ from torchmetrics import Accuracy
 import pytorch_lightning as pl
 from pytorch_lightning.utilities.rank_zero import rank_zero_info
 
-from BEATs import BEATs, BEATsConfig
+from AI.BEATs import BEATs, BEATsConfig
 
 
 class BEATsTransferLearningModel(pl.LightningModule):
@@ -22,7 +22,7 @@ class BEATsTransferLearningModel(pl.LightningModule):
         lr: float = 1e-3,
         lr_scheduler_gamma: float = 1e-1,
         num_workers: int = 6,
-        model_path: str = "./model/BEATs_iter3_plus_AS2M.pt",
+        model_path: str = "./AI/model/BEATs_iter3_plus_AS2M.pt",
         **kwargs,
     ) -> None:
         """TransferLearningModel.

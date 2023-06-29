@@ -44,10 +44,12 @@ INSTALLED_APPS = [
     "django_extensions",
     "django.core.files",
     "django.core.files.storage",
+    'django_celery_results',
     "Main",
     "SignIn",
     "app",
     'storages',
+    'AI',
 ]
 
 MIDDLEWARE = [
@@ -165,7 +167,9 @@ AWS_STORAGE_BUCKET_NAME = 'hearo-sound'
 AWS_S3_REGION_NAME = 'ap-northeast-2' 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-
+#Celery Settings
+DJANGO_CELERY_RESULT_BACKEND = 'django-db'
+CELERY_RESULT_BACKEND = 'django-db'
 
 
 
