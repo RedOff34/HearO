@@ -15,6 +15,8 @@ model = transferLearning.BEATsTransferLearningModel()
 
 checkpoint = torch.load(checkpoint_path, map_location=torch.device('cpu'))
 
+popup_path = './templates/popup1.html'
+
 model.load_state_dict(checkpoint['state_dict'], strict=True)
 model.eval()
 
@@ -28,13 +30,15 @@ def predict_main():
             data_list.sort(reverse=True)
             prob, result = predict(model, data_path)
             if result > 11:
-                print(prob)  
-                print(result)
+                print(data_list[0])
+                print("확률: ", prob, end='')  
+                print("범주: ", result)
                 os.remove(os.path.join(data_path, data_list[0]))    
                 continue
             else:
-                print(prob)
-                print(result)
+                print(data_list[0])
+                print("확률: ", prob, end='')  
+                print("범주: ", result) 
                 os.remove(os.path.join(data_path, data_list[0]))  
                 continue
         else:
