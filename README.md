@@ -62,3 +62,36 @@
 - Django<br>
 
 ## 만든 사람들
+- AI
+
+[이준민](https://github.com/Jun9min9)
+
+Transformer 기반 audio classfication modeling
+
+[정재웅](https://github.com/UngCoding)
+
+Beat’s model fine tuning
+
+[이한나](https://github.com/hnnaaa95)
+
+데이터 분석 및 CNN modeling
+
+- Backend
+
+[유용주](https://github.com/yyy5618)
+
+계정관련 기능 구현, 실시간 위치 가져오기, AWS S3에 파일저장,불러오기
+
+[박지훈](https://github.com/RedOff34)
+
+모델폼을 이용한 게시글, 댓글 기능 구현, 음성녹음기능, sms 문자 전송, 
+
+- Frontend
+
+[이유진](https://github.com/leeyujin21)
+
+게시판(목록, 작성, 뷰), 로그인, 회원가입, 비밀번호찾기, 메인화면
+
+[홍아현](https://github.com/oaho)
+
+회원정보 수정, 환경설정, 위급상황감지 화면, 신고접수 화면, 메인화면
