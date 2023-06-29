@@ -5,6 +5,9 @@ sys.path.append('C:/Users/Jae Ung Jung/Big_project_3_9')
 import torch 
 from AI.BEATs_eval import predict
 from AI import transferLearning
+from app.views import get_user_danger
+import shutil
+import requests
 import os
 
 
@@ -15,7 +18,6 @@ model = transferLearning.BEATsTransferLearningModel()
 
 checkpoint = torch.load(checkpoint_path, map_location=torch.device('cpu'))
 
-popup_path = './templates/popup1.html'
 
 model.load_state_dict(checkpoint['state_dict'], strict=True)
 model.eval()
@@ -38,8 +40,8 @@ def predict_main():
             else:
                 print(data_list[0])
                 print("확률: ", prob, end='')  
-                print("범주: ", result) 
-                os.remove(os.path.join(data_path, data_list[0]))  
+                print("범주: ", result)
+                shutil.move(os.path.join(data_path, data_list[0]), os.path.join('./media/sound_history/', data_list[0].split('_')[0], data_list[0]))
                 continue
         else:
             continue
