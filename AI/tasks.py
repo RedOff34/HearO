@@ -38,10 +38,10 @@ def predict_main():
                 os.remove(os.path.join(data_path, data_list[0]))    
                 continue
             else:
-                print(data_list[0])
                 print("확률: ", prob, end='')  
                 print("범주: ", result)
-                shutil.move(os.path.join(data_path, data_list[0]), os.path.join('./media/sound_history/', data_list[0].split('_')[0], data_list[0]))
+                file_name = data_list[0][:-4] + '_' + str(result) + '_' + str(prob)+'.wav' 
+                shutil.move(os.path.join(data_path, data_list[0]), os.path.join('./media/sound_history/', data_list[0].split('_')[0], file_name))
                 continue
         else:
             continue
