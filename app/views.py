@@ -18,11 +18,13 @@ import boto3
 def show_location(request):
     return render(request, 'app/location.html')  
 
-@login_required  
+@login_required
 @csrf_exempt
 def save_location(request):
     if request.method == 'POST':
         address = request.POST['address']
+        # '대한민국' 제거
+        address = ' '.join(address.split(' ')[1:])
 
         loc, created = Location.objects.update_or_create(
             user_id=request.user, 
