@@ -3,7 +3,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpRequest, JsonResponse
 from .forms import PostModelForm, PostUpdateForm, CommentModelForm
-from .models import Post, Comment, Audio
+from .models import Post, Comment, Audio, Setting
 from django.utils import timezone
 from django.contrib import messages
 from django.http import HttpResponseForbidden
@@ -28,9 +28,18 @@ def PostMove(request):
     posts = Post.objects.all()  # 모든 게시물 가져오기
     return render(request, 'main/Post.html', {'posts': posts})
 
+@login_required
 def Settings(request):
-    
-    return render(request, 'main/Settings.html')
+    if request.method == "POST":
+        sensitivity = request.POST.get('sensitivity')
+        count = request.POST.get('count')
+
+        Setting.objects.update_or_create(user=request.user, defaults={'sensitivity': sensitivity, 'count': count})
+
+        return redirect('/Main/')
+    else:
+        settings = Setting.objects.filter(user=request.user).first()
+        return render(request, 'main/Settings.html', {'settings': settings})
 
 def PostNew(request):
     if request.method == "POST":

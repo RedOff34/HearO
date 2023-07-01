@@ -252,18 +252,17 @@
         xhr.open('POST', '/app/latesthistory/', true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
-              var userhistory = JSON.parse(xhr.responseText);
-              // 서버에서 반환된 데이터를 처리하는 로직을 작성
-              document.getElementById("name").innerHTML = userhistory.user_name;
-            document.getElementById("where").innerHTML = userhistory.location;
-            document.getElementById("time").innerHTML = userhistory.date;
-            document.getElementById("sos_content").innerHTML = userhistory.danger_type;
+                var userhistory = JSON.parse(xhr.responseText);
+                // 서버에서 반환된 데이터를 처리하는 로직을 작성
+                document.getElementById("name").innerHTML = userhistory.user_name;
+                document.getElementById("where").innerHTML = userhistory.location;
+                document.getElementById("time").innerHTML = userhistory.date;
+                document.getElementById("sos_content").innerHTML = userhistory.danger_type;
             /*document.getElementById("file").innerHTML = "{{ danger_info.file }}";*/
-            var fileFullName = userhistory.file;
-            var maxCharacters = 30; // 최대 표시할 문자 수
-
-            var shortenedFileName = fileFullName.length > maxCharacters ? fileFullName.substring(0, maxCharacters) + "..." : fileFullName;
-            document.getElementById("file").innerHTML = shortenedFileName;
+                var fileFullName = userhistory.file;
+                var maxCharacters = 30; // 최대 표시할 문자 수
+                var shortenedFileName = fileFullName.length > maxCharacters ? fileFullName.substring(0, maxCharacters) + "..." : fileFullName;
+                document.getElementById("file").innerHTML = shortenedFileName;
             }
           };
         xhr.send();

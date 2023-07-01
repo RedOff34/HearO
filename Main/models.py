@@ -33,4 +33,7 @@ class History(models.Model):
 class Audio(models.Model):
     audio = models.FileField(upload_to='sound/')
     
-    
+class Setting(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE) # 글 작성자 id 
+    sensitivity = models.IntegerField()
+    count = models.IntegerField()

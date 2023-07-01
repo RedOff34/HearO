@@ -174,10 +174,10 @@
         <div class="modal-window">
             <img class="report_Q" src="{% static 'img/report_Q.png' %}">
                   
-            <button id = "btn_no" type="button" class="close-area"><b>아니요 &nbsp; (59s)</b></button>
+            <button id = "btn_no" type="button" class="close-area"><b> </b></button>
             <button id = "btn_yes" type="button" class="yes-area" onclick="click_yes()"><b>예</b></button> 
             <div class="title">
-                <p style="display:inline; font-size:large; left:20%;"><span id="report" style="color:red;"></span> 감지 <span id="per"></span> %</p>         
+                <p style="display:inline; font-size:large; left:20%;"><span id="report" style="color:red;"></span> 감지 </p>         
             </div>
             <div class="content">
                 <p style="color:rgb(109, 108, 108); font-size:small;">제한 시간 초과시 자동 신고 됩니다!</p>
@@ -206,9 +206,36 @@
     <script src="{% static 'js/main.js' %}"></script>
 
     <script>
-   
-    
+
+    // 카운트 다운
         
+    //카운트 다운 js 시작
+        var myTimer;
+        const btn_no = document.getElementById('btn_no')
+        var xhr_setting = new XMLHttpRequest();
+        xhr_setting.open('POST', '/app/getsetting/', true);
+        xhr_setting.onreadystatechange = function(){
+            if (xhr_setting.readyState === 4 && xhr_setting.status === 200){
+                var usersetting = JSON.parse(xhr_setting.responseText);
+                var count = usersetting.count;
+                document.getElementById("btn_no").innerHTML = "아니오" + "(" + count +"s)";
+                myTimer = setInterval(function(){
+                    count--;
+                    var time = count;
+                    document.getElementById("btn_no").innerHTML = "아니오" + "(" + time +"s)";
+                    if(count == 0){ //카운트다운 종료 시
+                        clearInterval(myTimer);
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', '/app/userdanger/', true);
+                        xhr.send();
+                        window.location.href = "{% url 'app:popup1' %}";
+                    }
+                },1000);
+            }
+        }
+        xhr_setting.send();
+
+        //카운트 다운 js 종료            
         /*모달창의 클로즈(X)버튼을 누르면 모달창이 꺼지게 하기 */
         const closeBtn = modal.querySelector(".close-area")
         closeBtn.addEventListener("click", e => {
@@ -239,8 +266,17 @@
     </script>
     <!--감지내역-->
     <script>
-        document.getElementById("report").innerHTML = "낙상, 붕괴";
-        document.getElementById("per").innerHTML = "89.7";
+        var xhr_danger = new XMLHttpRequest();
+        var danger;
+        xhr_danger.open('POST', '/app/latestdanger/', true);
+        xhr_danger.onreadystatechange = function() {
+            if (xhr_danger.readyState === 4 && xhr_danger.status === 200) {
+                var danger = JSON.parse(xhr_danger.responseText);
+                // 서버에서 반환된 데이터를 처리하는 로직을 작성
+                document.getElementById("report").innerHTML = danger.danger_type;
+            }
+          };
+        xhr_danger.send();
     </script>
 
 

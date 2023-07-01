@@ -58,7 +58,19 @@ function check_folder(threshold = 50){
 }
 
 function getLocation() {
-  const intervalid = setInterval(check_folder,5000,50);
+  var xhr_setting = new XMLHttpRequest();
+  xhr_setting.open('POST', '/app/getsetting/', true);
+  xhr_setting.onreadystatechange = function(){
+    if (xhr_setting.readyState === 4 && xhr_setting.status === 200){
+      var usersetting = JSON.parse(xhr_setting.responseText);
+      var sensitivity = usersetting.sensitivity;
+      let max_threshold = 99.9;
+      let min_threshold = 50.0;
+      let threshold = (min_threshold-max_threshold)*sensitivity/100 + max_threshold;
+      const intervalid = setInterval(check_folder,5000, threshold); 
+    }
+  }
+  xhr_setting.send();
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else { 

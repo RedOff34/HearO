@@ -1,12 +1,13 @@
 from django.shortcuts import render
 import os
+import shutil
 import requests
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
 from .models import Location, danger
 from SignIn.models import User 
 from django.contrib.auth.decorators import login_required
-from Main.models import History
+from Main.models import History, Setting
 from django.utils import timezone
 from django.conf import settings
 import boto3
@@ -16,12 +17,26 @@ import googlemaps
 
 @login_required
 @csrf_exempt
+def get_setting(request: HttpResponse):
+    user = request.user
+    setting = Setting.objects.get(user=user)
+    user_setting = {
+        'user': setting.user.user_id,
+        'sensitivity' : setting.sensitivity,
+        'count': setting.count, 
+    }
+    return JsonResponse(user_setting)
+    
+    
+
+
+@login_required
+@csrf_exempt
 def get_latest_history(request: HttpResponse):
     user = request.user
-    user_id = user.user_id
     latest_history = History.objects.filter(user=user).order_by('-date').first()
     userhistory = {
-        'user_id':latest_history.user_id,
+        'user_id':latest_history.user.user_id,
         'user_name':latest_history.user_name, 
         'user_address':latest_history.user_address,
         'location':latest_history.location, 
@@ -30,6 +45,21 @@ def get_latest_history(request: HttpResponse):
         'file':latest_history.file.name,
     }
     return JsonResponse(userhistory)
+
+@login_required
+@csrf_exempt
+def get_latest_danger(request: HttpResponse):
+    user = request.user
+    latest_danger = danger.objects.filter(user=user).order_by('-timestamp').first()
+    userdanger = {
+        'user_id':latest_danger.user.user_id,
+        'user_name':latest_danger.user.name, 
+        'danger_type':latest_danger.danger_type,
+        'sound_file':latest_danger.soundfile,
+        'prob':latest_danger.prob, 
+        'time':latest_danger.timestamp,
+    }
+    return JsonResponse(userdanger)
 
 # def current_location():
 #     key = 'AIzaSyBWyrdzNJz964bPNMJ6Lfla_w-mcch-Tmw'
@@ -60,7 +90,7 @@ def task_emergency_file(request: HttpResponse):
     user = request.user
     user_id = user.user_id
     folder_path = './media/sound_history/'
-    folder_path = os.path.join(folder_path, user_id)
+    folder_path = os.path.join(folder_path, user_id+ '/')
     files = os.listdir(folder_path)
     files.sort(reverse=True)
     save_danger_from_file(request)
@@ -73,7 +103,7 @@ def remove_file(request: HttpResponse):
     user = request.user
     user_id = user.user_id
     folder_path = './media/sound_history/'
-    folder_path = os.path.join(folder_path, user_id)
+    folder_path = os.path.join(folder_path, user_id +'/')
     files = os.listdir(folder_path)
     files.sort(reverse=True)
     os.remove(os.path.join(folder_path, files[0]))
