@@ -19,4 +19,5 @@ urlpatterns = [
      path('task_emergency_file/', views.task_emergency_file, name='task_emergency_file'),
      path('latesthistory/', views.get_latest_history, name='get_latest_history'),
      path('remove_file/', views.remove_file, name='remove_file'),
+     
 ]
