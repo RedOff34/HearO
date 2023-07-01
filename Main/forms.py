@@ -2,6 +2,20 @@ from django import forms
 
 from .models import Post, Comment, Audio
 class PostModelForm(forms.ModelForm):
+    title = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'form-control', 'style': 'width:100%; border:1px solid #ced4da', 'rows': '1', 'placeholder': '20자 이내', 'maxlength': '100', 'required': True}),
+        label='제목'
+    )
+    content = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'form-control', 'style': 'width:100%; border:1px solid #ced4da', 'rows': '10', 'placeholder': '300자 이내', 'maxlength': '300'}),
+        label='내용'
+    )
+    file = forms.FileField(
+        widget=forms.ClearableFileInput(attrs={'class': 'upload-file', 'id': 'input-file'}),
+        label='파일 첨부',
+        required=False
+    )
+
     class Meta:
         model = Post
         fields = ['title', 'content', 'file']
@@ -28,7 +42,7 @@ class PostUpdateForm(forms.ModelForm): # 글 수정
 
     class Meta:
         model = Post
-        fields = ['title', 'content', 'file']
+        fields = ['title', 'content']
         
 
 class CommentModelForm(forms.ModelForm): # 댓글 작성

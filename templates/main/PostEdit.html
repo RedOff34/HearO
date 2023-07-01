@@ -1,5 +1,182 @@
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-</form>
+{% load static %}
+<html lang="en">
+    <style>
+        .hearo{
+            width: 27.5px;
+            height: 27.5px;
+        }
+        .sos{
+            width:35px;
+            height:30px;
+            
+        }
+        .gps{
+            width:35px;
+            height:35px;
+        }
+        .switch{
+            width:70px;
+            height:70px;
+        }
+        .decision{
+            width:75px;
+            height:75px;
+        }
+        .setting{
+            width: 30px;
+            height: 30px;
+        }
+        .info{
+            width: 30px;
+            height: 30px;
+        }
+        #imageContainer img{
+            display: none;
+    
+        }
+        #imageContainer img.active{
+            display: block;
+        
+        }
+        #sentenceContainer{
+            text-align: center;
+            
+        }
+        
+    </style>
+
+    <head>
+        <meta charset="utf-8">
+        <title>HearO</title>
+        <link rel="shortcut icon" href="{% static 'images/hearo_logo_3.png' %}" class="hearo">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Free HTML Templates" name="keywords">
+        <meta content="Free HTML Templates" name="description">
+
+        <!-- Favicon -->
+        {% comment %} <link href="img/favicon.ico" rel="icon"> {% endcomment %}
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="{%static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{% static 'css/style_board_list.css' %}" rel="stylesheet">
+    
+    <div>
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
+            <a href="{% url 'Main:index' %}" class="navbar-brand p-0">
+                <h1 class="m-0 text-uppercase text-primary"><img class="hearo" src="{% static 'images/hearo_logo_3.png' %}"></i>HearO</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0 me-n3">
+                  <a href="{% url 'Main:index' %}" class="nav-item nav-link active">홈</a>
+                  <li class="nav-item">
+                      {% if user.is_authenticated %}
+                      <a class="nav-link" href="{% url 'SignIn:logout' %}">{{ user.user_id }} (로그아웃)</a>
+                      {% else %}
+                      <a class="nav-link" href="{% url 'first' %}">로그인</a>
+                      {% endif %}
+                  </li>
+                  <a href="{% url 'SignIn:pia' %}" class="nav-item nav-link">회원가입</a>
+                  <a href="{% url 'Main:info' %}" class="nav-item nav-link">HearO란?</a>
+                  <a href="{% url 'Main:Post' %}" class="nav-item nav-link active">게시판</a>
+                  <a href="testimonial.html" class="nav-item nav-link">신고접수</a>
+                  
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">마이페이지</a>
+                        <div class="dropdown-menu m-0">
+                          <a href="{% url 'SignIn:profile' %}" class="dropdown-item">회원정보</a>
+                            <a href="/Main/userhistory/" class="dropdown-item">신고내역</a>
+                            <a href="/Main/Settings/" class="dropdown-item">환경설정</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar End -->
+    </head>
+
+<body>
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-dark p-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-4 text-white">게시판</h1>
+                <a>Board</a>
+            </div>
+        </div>
+    </div><br><br>
+    <!-- Page Header End -->
+
+
+
+    <!--Write Start-->
+    <div class="container-fluid py-6 px-5" id="center">   
+        <div id="write_area">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+            
+                <div id="in_title">
+                    <h4>제목</h4>
+                    {{form.title}}
+                    
+                </div>
+                &nbsp;
+
+                <div class="wi_line"></div>
+                <div id="in_content">
+                    <h4>내용</h4>
+                    {{form.content}}
+
+                </div>
+               
+                <div class="file" ><br>
+                    {{form.file}}
+                    <input class="upload-name" readonly="read_only"   value="파일선택" style="font-size: 14px;">
+                    <label for="input-file" style="font-size: 14px;">찾아보기</label>
+                    <input type="file" id="input-file">
+                    <br><br>
+                    <div class="bt_se">
+                        <button type="submit"  class="btn btn-primary py-md-3 px-md-5 me-3" style="font-size: 14px;" >등록하기</button>
+                    </div>
+                </div>
+            </form>
+            
+           
+              
+        </div>
+    </div>
+    <!-- Write End-->
+
+
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

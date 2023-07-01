@@ -9,6 +9,7 @@
         .sos{
             width:35px;
             height:30px;
+            
         }
         .gps{
             width:35px;
@@ -32,12 +33,17 @@
         }
         #imageContainer img{
             display: none;
+
+    
         }
         #imageContainer img.active{
             display: block;
+       
+        
         }
         #sentenceContainer{
             text-align: center;
+            
         }
         
     </style>
@@ -114,14 +120,14 @@
           <img id="sos_off" src="{%static 'img\SOS_off.png'%}"  style="width: 25rem;" class="active">
       </div>
       <div id="sentenceContainer">
-          &nbsp; <p id="blinkk" class="blink vc hc" style="font-size: 15px;">소리를 통해 위급상황을 감지하고 있습니다.</p>
-          &nbsp; <p id="blinkkk" class="vc hc active" style="font-size: 15px;">위급상황을 감지하고 싶으면 눌러주세요.</p> 
+          &nbsp; <p id="blinkk" class="blink vc hc" style="font-size: 16px;">위급상황을 감지하고 있습니다.</p>
+          &nbsp; <p id="blinkkk" class="vc hc active" style="font-size: 16px;">위급상황을 감지하고 싶으면 눌러주세요.</p> 
       </div>
       
         <!-- Setting & Info Button Start -->
         <div>
-          <img onClick="location.href='setup.html'" src="https://cdn.icon-icons.com/icons2/1365/PNG/512/settings_89381.png" class="setting">
-          <img onClick="location.href='about.html'" src="https://cdn.icon-icons.com/icons2/67/PNG/512/info_13213.png" class="info">
+          <img onClick="location.href='{% url 'Main:setting' %}'" src="https://cdn.icon-icons.com/icons2/1365/PNG/512/settings_89381.png" class="setting">
+          <img onClick="location.href='{% url 'Main:info' %}'" src="https://cdn.icon-icons.com/icons2/67/PNG/512/info_13213.png" class="info">
   
       </div> 
     </div>
@@ -150,6 +156,7 @@
         let isRecording = false;
         let chunks = [];
         let intervalid;
+
   
         function makeSound(stream) {
           const source = audioCtx.createMediaStreamSource(stream);
@@ -165,10 +172,7 @@
           navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
               audioCtx = new (window.AudioContext || window.webkitAudioContext)();
               analyser = audioCtx.createAnalyser();
-  
               mediaRecorder = new MediaRecorder(stream);
-  
-  
               sos_off.onclick = () => {
                 if (!isRecording) {
                   isRecording = true;
@@ -179,6 +183,7 @@
                   setTimeout(stopRecording, 10000); // 10초 후 정지
                 }
               };
+
   
   
               // 이벤트 추가
@@ -204,6 +209,7 @@
                 if (isRecording) {
                   isRecording = false;
                   mediaRecorder.stop();
+
                 }
               }
   
@@ -220,23 +226,25 @@
   
   
                 audio.controls = true;
+                
                 const blob = new Blob(chunks, {
-                  type: "audio/wave codecs=opus",
+                  'type': 'audio/webm; codecs="opus"',
                 });
                 chunks = [];
                 const audioURL = URL.createObjectURL(blob);
                 audio.src = audioURL;
                 console.log("recorder stopped");
-  
+                
+
                 const formData = new FormData();
-                formData.append("audio_file", blob, clipName + ".wave");
+                formData.append("audio_file", blob, clipName + ".wav");
   
                 // CSRF 토큰 가져오기
                 const csrfToken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
   
                 const xhr = new XMLHttpRequest();
                 xhr.onload = function () {
-                  if (xhr.status === 200) {
+                 if (xhr.status === 200) {
                     console.log("파일 저장 성공");
                   } else {
                     console.log("파일 저장 실패");

@@ -157,27 +157,25 @@
                             </div>
                            
                             </div>
-                            <div class="col-12 hc d-flex justify-content-between" style="width: 350px;">
-                                <button onClick="location.href='{% url 'SignIn:update' %}'" class="btn btn-primary" type="button">수정하기</button>
-                                <button onClick="location.href='{% url 'SignIn:password' %}'" class="btn btn-primary" type="button">비밀번호 변경</button>
-                                
-                                <form id="delete-form" action="{% url 'SignIn:delete' %}" method='POST'>
-                                    {% csrf_token %}
-                                    <input id='delete-btn' class="btn btn-primary" type='submit' value='회원탈퇴'>
-                                </form>                              
-                               
-                                </div>
+                            <div class="col-12 hc d-flex justify-content-between" style="width: 330px; padding:0px; ">
+                                <button onClick="location.href='{% url 'SignIn:update' %}'" class="btn btn-primary" type="button" style="width:25%; font-size:80%; ">수정하기</button>
+                                <button onClick="location.href='{% url 'SignIn:password' %}'" class="btn btn-primary" type="button" style="width:35%; font-size:80%; margin-right:15px;" >비밀번호 변경</button>
+                             </div>
                             </div>
+                            
 
                           <div class="background" >                                                                               
 
                         </div>  
-                        <form id="delete-form" action="{% url 'SignIn:delete' %}" method='POST'>
+                        <br>
+              
+                        <form id="delete-form" action="{% url 'SignIn:delete' %}" method='POST' style="left:10%;">
                             {% csrf_token %}
-                            <input id='delete-btn' class="btn btn-primary" type='submit' value='회원탈퇴'>
-                        </form>                          
+                            <button id='delete-btn' type='submit' style="color: gray; background: transparent; border:0px; width:25%; font-size:80%; padding:0px;" onclick="performDelete()"><b>회원탈퇴</b></button>
+                        </form>                         
                     </div>                     
-            </div>          
+            </div>    
+                 
         </div>    
     </div>
     <!-- Sign Up End -->

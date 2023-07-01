@@ -114,11 +114,15 @@ def DeleteComment(request, comment_id):
 
 def save_audio(request):
     if request.method == 'POST':
+        
         audio_file = request.FILES.get('audio_file')
 
         if audio_file:
             user_id = request.user.user_id  # 현재 로그인된 사용자의 ID를 가져옵니다.
-
+            folder_name = f"{user_id}"
+            folder_path = './media/sound_history/' + folder_name
+            if not os.path.exists(folder_path):
+                os.mkdir(folder_path)
             # 파일 이름에 사용자 ID를 추가합니다.
             file_name = f"{user_id}_{audio_file.name}"
             audio = AudioSegment.from_file(audio_file, format="webm")
@@ -144,3 +148,42 @@ def get_user_history(request):
     user_history_json = serializers.serialize('json', user_history)
 
     return HttpResponse(user_history_json, content_type='application/json')
+
+
+def map_view(request):
+    return render(request, 'main/map.html')
+
+
+def popup1(request):
+    user = request.user
+    # 최신 History를 가져옵니다.
+    latest_history = History.objects.filter(user=user).order_by('-date').first()
+    if latest_history is not None:
+        danger_info = {
+            'user_name': user.name,
+            'user_address': user.address,
+            'location': latest_history.location,
+            'timestamp': latest_history.date.strftime("%Y-%m-%d %H:%M"),
+            'danger_type' : latest_history.danger_type,
+            'file' : latest_history.file.url if latest_history.file else None,
+        }
+    else:
+        danger_info = {
+            'user_id': user.user_id,
+            'message': '정보가 존재하지 않습니다.',
+        }
+
+    # danger_info를 context에 추가합니다.
+    context = {
+        'danger_info': danger_info,
+    }
+
+    return render(request, 'main/popup1.html', context)
+
+
+def popup2(request):
+    return render(request, 'main/popup2.html')
+
+def HistoryView(request):
+    his = History.objects.all()
+    return render(request, 'main/UserHistory.html', {'his':his})

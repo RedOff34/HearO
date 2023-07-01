@@ -27,7 +27,7 @@ class History(models.Model):
     date = models.DateTimeField() # 신고 시간 년 월 일 시간 까지
     danger_type = models.CharField(max_length=200)
     location = models.CharField(max_length=50) # 신고 당시 위치
-    file = models.CharField(max_length=50) # 파일 다운받을 링크 저장 
+    file = models.FileField() # 파일 이름 
     
 
 class Audio(models.Model):

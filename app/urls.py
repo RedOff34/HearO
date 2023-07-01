@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import include
 
 app_name = 'app'
 
@@ -12,5 +13,10 @@ urlpatterns = [
      path('show_location/', views.show_location, name='show_location'),
      path('userdanger/', views.get_user_danger, name='get_user_danger'),     
      path('myurl/', views.my_view, name='myview'),
-     
+     path('popup1/', views.popup1, name='popup1'),
+     path('popup2/', views.popup2, name='popup2'),
+     path('get_folder_contents/', views.get_folder_contents, name='get_folder_contents'),
+     path('task_emergency_file/', views.task_emergency_file, name='task_emergency_file'),
+     path('latesthistory/', views.get_latest_history, name='get_latest_history'),
+     path('remove_file/', views.remove_file, name='remove_file'),
 ]

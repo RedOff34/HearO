@@ -13,16 +13,15 @@
         </div>
         <!-- Page Header End -->
     
-<body>      
+        
         <!-- Sign Up Start -->
 <div class="container-fluid bg-secondary px-0"><br><br>
     <div class="row g-0">
         <div class="col-lg-6 py-6 vc hc">
-            <div class="row g-3">
             <form method="post" action="{% url 'SignIn:signup' %}">
                 {% csrf_token %}
-                {% include "form_errors.html" %}
-
+                {% comment %} {% include "form_errors.html" %} {% endcomment %}
+                
                 <div class="row g-3">
                     <div class="col-8">
                         <label for="form-floating-1">이름</label>
@@ -30,7 +29,7 @@
                             {{ form.name }}
                             <br>
                             {% for error in form.name.errors %}
-                            <div class="error" style="color: #F3525A;">
+                            <div class="error" style="color: #F3525A; font-size:5px;">
                                  {{ error }}
                             </div>
                             {% endfor %}
@@ -42,7 +41,7 @@
                         <fieldset>
                             {{ form.gender }}                    
                             {% for error in form.gender.errors %}
-                            <div class="error" style="color: #F3525A;">
+                            <div class="error" style="color: #F3525A; font-size:5px;">
                                  {{ error }}
                             </div>
                             {% endfor %}
@@ -55,7 +54,7 @@
                             {{ form.user_id }}
                             <br>
                             {% for error in form.user_id.errors %}
-                            <div class="error" style="color: #F3525A;">
+                            <div class="error" style="color: #F3525A; font-size:5px;">
                                  {{ error }}
                             </div>
                             {% endfor %}
@@ -86,7 +85,7 @@
                                 {{ form.birth }}
                                 <br>
                                 {% for error in form.birth.errors %}
-                                <div class="error" style="color: #F3525A;">
+                                <div class="error" style="color: #F3525A; font-size:5px;">
                                      {{ error }}
                                 </div>
                                 {% endfor %}
@@ -99,7 +98,7 @@
                                 {{ form.email }}
                                 <br>
                                 {% for error in form.email.errors %}
-                                <div class="error" style="color: #F3525A;">
+                                <div class="error" style="color: #F3525A; font-size:5px;">
                                      {{ error }}
                                 </div>
                                 {% endfor %}
@@ -112,7 +111,7 @@
                                 {{ form.password1 }}
                                 <br>
                                 {% for error in form.password1.errors %}
-                                <div class="error" style="color: #F3525A;">
+                                <div class="error" style="color: #F3525A; font-size:5px;">
                                      {{ error }}
                                 </div>
                                 {% endfor %}
@@ -125,7 +124,7 @@
                                 {{ form.password2 }}
                                 <br>
                                 {% for error in form.password2.errors %}
-                                <div class="error" style="color: #F3525A;">
+                                <div class="error" style="color: #F3525A; font-size:5px;">
                                      {{ error }}
                                 </div>
                                 {% endfor %}
@@ -138,7 +137,7 @@
                                 {{ form.phone_num }}
                                 <br>
                                 {% for error in form.phone_num.errors %}
-                                <div class="error" style="color: #F3525A;">
+                                <div class="error" style="color: #F3525A; font-size:5px;">
                                      {{ error }}
                                 </div>
                                 {% endfor %}
@@ -151,7 +150,7 @@
                                 {{ form.emergency }}
                                 <br>
                                 {% for error in form.emergency.errors %}
-                                <div class="error" style="color: #F3525A;">
+                                <div class="error" style="color: #F3525A; font-size:5px;">
                                      {{ error }}
                                 </div>
                                 {% endfor %}
@@ -164,7 +163,7 @@
                                 {{ form.address }}
                                 <br>
                                 {% for error in form.address.errors %}
-                                <div class="error" style="color: #F3525A;">
+                                <div class="error" style="color: #F3525A; font-size:5px;">
                                      {{ error }}
                                 </div>
                                 {% endfor %}
@@ -175,7 +174,7 @@
                         <button type="submit" class="btn btn-primary w-100 py-3">가입하기</button>
                     </div>
                 </div>
-            </div>
+                
             </form>
         </div>
     </div>
@@ -197,3 +196,4 @@
     </body>
 
     </html>
+

@@ -1,10 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <body>
 
-<p id="demo"></p>
 
-<div id="map" style="height: 300px; width: 90%;"></div>
+<div id="center" style="position: fixed; top: 75%; left: 40%;"><img class="gps" src="{% static 'images/map_mark.png' %}" style="display: inline-block; vertical-align: middle; ">
+  <p type="button" onClick="location.href='{% url 'Main:map' %}'" style="display: inline-block; vertical-align: middle; margin:0px; ">현재위치</p></div>
+
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=29134990ce0d37054a535a7b736b4f3d"></script>
 
@@ -12,7 +14,48 @@
 var x = document.getElementById("demo");
 var map, infoWindow;
 
+function check_folder(threshold = 50){
+  var xhr_folder_content = new XMLHttpRequest();
+  xhr_folder_content.open('POST', '/app/get_folder_contents/', true);  // Django URL에 맞게 수정
+  xhr_folder_content.onload = function () {
+    console.log(xhr_folder_content.status);
+    if (xhr_folder_content.status === 200) {
+        var response = JSON.parse(xhr_folder_content.responseText);
+        var files = response.files;
+        files.sort(function(a, b) {
+          return b.localeCompare(a);
+        });
+        // Process file list
+        if(files.length > 0) {
+          for (var i = 0; i < files.length; i++) {
+              var fileName = files[i];
+              
+              console.log(fileName.slice(-6,-4))
+              var lastTwoDigits = parseInt(fileName.slice(-6,-4));
+              if (lastTwoDigits > threshold) {
+                  // Perform additional actions for files matching the condition
+                  console.log('File:', fileName);
+                  window.location.href = '/app/popup2/';
+                  xhr_task = new XMLHttpRequest();
+                  xhr_task.open('POST', '/app/task_emergency_file/', true);
+                  xhr_task.send();
+                  // Your additional logic here
+             }else{
+              xhr_remove = new XMLHttpRequest();
+              xhr_remove.open('POST', '/app/remove_file/', true);
+              xhr_remove.send();
+             }
+          }
+        }
+      } else {
+        console.error('Request failed. Status:', xhr_folder_content.status);
+     }
+  };
+  xhr_folder_content.send();
+}
+
 function getLocation() {
+  const intervalid = setInterval(check_folder,5000,50);
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else { 
@@ -30,19 +73,6 @@ function showPosition(position) {
       var address = data.results[0].formatted_address;
       x.innerHTML += "<br>현재위치: " + address;
 
-      var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-      mapOption = {
-          center: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude), // 지도의 중심좌표
-          level: 3 // 지도의 확대 레벨
-      };
-      
-      var map = new kakao.maps.Map(mapContainer, mapOption); 
-
-      var marker = new kakao.maps.Marker({
-          position: mapOption.center,
-      });
-
-      marker.setMap(map);
                 
       var xhr_address = new XMLHttpRequest();
       var url_address = "{% url 'app:save_location' %}";

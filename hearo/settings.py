@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     "django_extensions",
     "django.core.files",
     "django.core.files.storage",
-    'django_celery_results',
     "Main",
     "SignIn",
     "app",
@@ -122,7 +121,9 @@ TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
 
-USE_TZ = True
+USE_L10N = True
+
+USE_TZ = False  # False 로 설정해야 DB에 변경 된 TIME_ZONE 이 반영 됨 
 
 
 # Static files (CSS, JavaScript, Images)
@@ -166,10 +167,6 @@ AWS_SECRET_ACCESS_KEY = 'DJvVFuVMC02oIUurH00WfIaIwSt+/S5kT6fsONoI'
 AWS_STORAGE_BUCKET_NAME = 'hearo-sound'
 AWS_S3_REGION_NAME = 'ap-northeast-2' 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-#Celery Settings
-DJANGO_CELERY_RESULT_BACKEND = 'django-db'
-CELERY_RESULT_BACKEND = 'django-db'
 
 
 
