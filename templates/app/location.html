@@ -33,13 +33,16 @@ function check_folder(threshold = 50){
               console.log(fileName.slice(-6,-4))
               var lastTwoDigits = parseInt(fileName.slice(-6,-4));
               if (lastTwoDigits > threshold) {
-                  // Perform additional actions for files matching the condition
                   console.log('File:', fileName);
                   window.location.href = '/app/popup2/';
                   xhr_task = new XMLHttpRequest();
                   xhr_task.open('POST', '/app/task_emergency_file/', true);
                   xhr_task.send();
-                  // Your additional logic here
+                  if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                  } else { 
+                    console.log("Geolocation is not supported by this browser.");
+                  }
              }else{
               xhr_remove = new XMLHttpRequest();
               xhr_remove.open('POST', '/app/remove_file/', true);

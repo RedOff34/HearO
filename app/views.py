@@ -31,20 +31,20 @@ def get_latest_history(request: HttpResponse):
     }
     return JsonResponse(userhistory)
 
-def current_location():
-    key = 'AIzaSyBWyrdzNJz964bPNMJ6Lfla_w-mcch-Tmw'
-    url = f'https://www.googleapis.com/geolocation/v1/geolocate?key={key}'
-    data = {
-    'considerIp': True, # 현 IP로 데이터 추출
-    }
-    result = requests.post(url, data)    
-    print(result.text)
-    location = json.loads(result.text)
-    lat = location["location"]["lat"] # 현재 위치의 위도 추출
-    lng = location["location"]["lng"] # 현재 위치의 경도 추출
-    gmaps = googlemaps.Client(key)
-    address = gmaps.reverse_geocode((lat, lng),language='ko')
-    return address[0]['formatted_address']
+# def current_location():
+#     key = 'AIzaSyBWyrdzNJz964bPNMJ6Lfla_w-mcch-Tmw'
+#     url = f'https://www.googleapis.com/geolocation/v1/geolocate?key={key}'
+#     data = {
+#     'considerIp': True, # 현 IP로 데이터 추출
+#     }
+#     result = requests.post(url, data)    
+#     print(result.text)
+#     location = json.loads(result.text)
+#     lat = location["location"]["lat"] # 현재 위치의 위도 추출
+#     lng = location["location"]["lng"] # 현재 위치의 경도 추출
+#     gmaps = googlemaps.Client(key)
+#     address = gmaps.reverse_geocode((lat, lng),language='ko')
+#     return address[0]['formatted_address']
 
 @login_required
 def popup1(request):
@@ -120,13 +120,13 @@ def save_location(request):
 @csrf_exempt
 def get_user_danger(request:HttpResponse):
     user = request.user
+    latest_location = Location.objects.filter(user=user).order_by('-timestamp').first()
     latest_danger = danger.objects.filter(user=user).order_by('-timestamp').first()
     if latest_danger is not None:
-        location = current_location()
         danger_info = {
             'user_name': user.name,
             'user_address':user.address,
-            'location': location,
+            'location': latest_location.location,
             'timestamp': latest_danger.timestamp.strftime("%Y-%m-%d %H:%M"),
             'danger_type' : latest_danger.danger_type,
             'file' : latest_danger.soundfile,
