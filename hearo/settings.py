@@ -168,5 +168,10 @@ AWS_STORAGE_BUCKET_NAME = 'hearo-sound'
 AWS_S3_REGION_NAME = 'ap-northeast-2' 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
+# Message Settings
+MESSAGE_ACCESS_KEY = "WQUb7qonyYwsyd5tVTq5"
+MESSAGE_SECRET_KEY = "Y3Tly6hynzLr6YihqDIBNtFbyaqZByckHnZkri9u"
+MESSAGE_SERVICE_KEY = "ncp:sms:kr:310676496896:hearo"
+
 
 

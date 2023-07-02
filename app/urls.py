@@ -22,4 +22,5 @@ urlpatterns = [
      path('getsetting/', views.get_setting, name='get_setting'),
      path('latestdanger/', views.get_latest_danger, name='get_latest_danger'),
      path('uploads3/', views.upload_s3, name='upload_s3'),
+     path('sendmessage/', views.send_message, name='send_message')
 ]

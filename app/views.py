@@ -15,6 +15,10 @@ import os
 import requests, json 
 import googlemaps
 import time
+import base64
+import hmac
+import hashlib
+
 
 
 @login_required
@@ -102,7 +106,54 @@ def task_emergency_file(request: HttpResponse):
 @csrf_exempt
 def send_message(request:HttpResponse):
     user = request.user
-    user_id = user.user_id
+    user_name = user.name
+    number = user.emergency
+    latest_history = History.objects.filter(user=user).order_by('-date').first()
+    date = latest_history.date
+    danger_type = latest_history.danger_type
+    location = latest_history.location
+    file = latest_history.file
+    secret_key = settings.MESSAGE_SECRET_KEY
+    access_key = settings.MESSAGE_ACCESS_KEY
+    service_key = settings.MESSAGE_SERVICE_KEY
+    url = "https://sens.apigw.ntruss.com"
+    uri = f"/sms/v2/services/{service_key}/messages"    
+    timestamp = str(int(time.time() * 1000))
+    contents =  '이름: {} \n'.format(user_name) + '시간: {}\n'.format(date) + '현재 상황: {}\n'.format(danger_type)+ '위치: {}\n'.format(location) + '음성파일: {} \n'.format(file)
+
+    header = {
+    "Content-Type": "application/json; charset=utf-8", 
+    "x-ncp-apigw-timestamp": timestamp,
+    "x-ncp-iam-access-key": access_key,
+    "x-ncp-apigw-signature-v2": make_signature(secret_key, access_key, timestamp, uri)
+    }
+    data = {
+        "type": "MMS",
+        "from": user.phone_num,
+        "content": contents,
+        "subject": "SENS",
+        "messages": [
+            {
+                "to": number,
+            }
+        ]
+    }
+    res = requests.post(url+uri, headers=header, data=json.dumps(data))
+    datas = json.loads(res.text)
+
+    print("메시지 전송 상태")
+    print(res.text+"\n")
+    
+    return HttpResponse("message sent")
+
+
+def make_signature(secret_key, access_key, timestamp, uri):
+    secret_key = bytes(secret_key, 'UTF-8')
+    method = "POST"
+    message = method + " "  + uri + "\n" + timestamp + "\n" + access_key
+    message = bytes(message, 'UTF-8')
+    signingKey = base64.b64encode(hmac.new(secret_key, message, digestmod=hashlib.sha256).digest())
+    return signingKey    
 
 @login_required
 @csrf_exempt

@@ -184,7 +184,8 @@
         
     //카운트 다운 js 시작
         var myTimer;
-        const btn_no = document.getElementById('btn_no')
+        const btn_no = document.getElementById('btn_no');
+        const btn_yes = document.getElementById("btn_yes");
         var xhr_setting = new XMLHttpRequest();
         xhr_setting.open('POST', '/app/getsetting/', true);
         xhr_setting.onreadystatechange = function(){
@@ -197,13 +198,6 @@
                     var time = count;
                     document.getElementById("btn_no").innerHTML = "아니오" + "(" + time +"s)";
                     
-                    btn_no.addEventListener("click", e => {
-                        var xhr_remove = new XMLHttpRequest();
-                        clearInterval(myTimer);
-                        xhr_remove.open('POST', '/app/remove_file/', true);
-                        xhr_remove.send();
-                        window.location.href = "{% url 'Main:index' %}";
-                    })
                     
                     if(count == 0){ //카운트다운 종료 시
                         clearInterval(myTimer);
@@ -213,6 +207,9 @@
                         var xhr_save_s3 = new XMLHttpRequest();
                         xhr_save_s3.open('Post', '/app/uploads3/', true);
                         xhr_save_s3.send();
+                        var xhr_send_message = new XMLHttpRequest();
+                        xhr_send_message.open('Post', '/app/sendmessage/',true);
+                        xhr_send_message.send();
                         var xhr_remove = new XMLHttpRequest();
                         xhr_remove.open('POST', '/app/remove_file/', true);
                         xhr_remove.send();
@@ -222,6 +219,32 @@
             }
         }
         xhr_setting.send();
+
+        btn_no.addEventListener("click", e => {
+            var xhr_remove = new XMLHttpRequest();
+            clearInterval(myTimer);
+            xhr_remove.open('POST', '/app/remove_file/', true);
+            xhr_remove.send();
+            window.location.href = "{% url 'Main:index' %}";
+        });
+
+        btn_yes.addEventListener("click", e => {
+            clearInterval(myTimer);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/app/userdanger/', true);
+            xhr.send();
+            var xhr_save_s3 = new XMLHttpRequest();
+            xhr_save_s3.open('Post', '/app/uploads3/', true);
+            xhr_save_s3.send();
+            var xhr_send_message = new XMLHttpRequest();
+            xhr_send_message.open('Post', '/app/sendmessage/',true);
+            xhr_send_message.send();
+            var xhr_remove = new XMLHttpRequest();
+            xhr_remove.open('POST', '/app/remove_file/', true);
+            xhr_remove.send();
+            window.location.href = "{% url 'app:popup1' %}";
+        });
+
 
         //카운트 다운 js 종료            
         /*모달창의 클로즈(X)버튼을 누르면 모달창이 꺼지게 하기 */
@@ -237,25 +260,7 @@
                 modal.style.display = "none"
             }
         })
-        
 
-        /* 예를 누르면 History db에 정보 올리기 & s3에 파일 올리기 */
-        const btn_yes = document.getElementById("btn_yes");
-        function click_yes() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/app/userdanger/', true);
-            xhr.send();
-            var xhr_save_s3 = new XMLHttpRequest();
-            xhr_save_s3.open('Post', '/app/uploads3/', true);
-            xhr_save_s3.send();
-            var xhr_remove = new XMLHttpRequest();
-            xhr_remove.open('POST', '/app/remove_file/', true);
-            xhr_remove.send();
-            window.location.href = "{% url 'app:popup1' %}";
-        }
-        btn_yes.addEventListener("click", e => {
-            click_yes();
-        })
         
     </script>
     <!--신고내역-->
