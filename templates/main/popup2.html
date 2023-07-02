@@ -158,7 +158,7 @@
                     <div class="dropdown-menu m-0">
                         <a href="mem_info.html" class="dropdown-item">회원정보</a>
                         <a href="detail.html" class="dropdown-item active">신고내역</a>
-                        <a href="setup.html" class="dropdown-item">환경설정</a>
+                        <a href="Settings.html" class="dropdown-item">환경설정</a>
                     </div>
                 </div>
             </div>
@@ -223,6 +223,15 @@
                     count--;
                     var time = count;
                     document.getElementById("btn_no").innerHTML = "아니오" + "(" + time +"s)";
+                    
+                    btn_no.addEventListener("click", e => {
+                        var xhr_remove = new XMLHttpRequest();
+                        clearInterval(myTimer);
+                        xhr_remove.open('POST', '/app/remove_file/', true);
+                        xhr_remove.send();
+                        window.location.href = "{% url 'Main:index' %}";
+                    })
+                    
                     if(count == 0){ //카운트다운 종료 시
                         clearInterval(myTimer);
                         var xhr = new XMLHttpRequest();
@@ -255,17 +264,7 @@
                 modal.style.display = "none"
             }
         })
-
-        /* 아니오를 누르면 Main으로 돌아가고 파일 삭제 *//
-        function click_no() {
-            var xhr_remove = new XMLHttpRequest();
-            xhr_remove.open('POST', '/app/remove_file/', true);
-            xhr_remove.send();
-            window.location.href = "{% url 'Main:index' %}";
-        }
-        btn_no.addEventListener("click", e => {
-            click_no();
-        })
+        
 
         /* 예를 누르면 History db에 정보 올리기 & s3에 파일 올리기 */
         const btn_yes = document.getElementById("btn_yes");
