@@ -228,6 +228,12 @@
                         var xhr = new XMLHttpRequest();
                         xhr.open('POST', '/app/userdanger/', true);
                         xhr.send();
+                        var xhr_save_s3 = new XMLHttpRequest();
+                        xhr_save_s3.open('Post', '/app/uploads3/', true);
+                        xhr_save_s3.send();
+                        var xhr_remove = new XMLHttpRequest();
+                        xhr_remove.open('POST', '/app/remove_file/', true);
+                        xhr_remove.send();
                         window.location.href = "{% url 'app:popup1' %}";
                     }
                 },1000);
@@ -250,14 +256,34 @@
             }
         })
 
-        /* 예를 누르면 History db에 정보 올리기 */
+        /* 아니오를 누르면 Main으로 돌아가고 파일 삭제 *//
+        function click_no() {
+            var xhr_remove = new XMLHttpRequest();
+            xhr_remove.open('POST', '/app/remove_file/', true);
+            xhr_remove.send();
+            window.location.href = "{% url 'Main:index' %}";
+        }
+        btn_no.addEventListener("click", e => {
+            click_no();
+        })
+
+        /* 예를 누르면 History db에 정보 올리기 & s3에 파일 올리기 */
         const btn_yes = document.getElementById("btn_yes");
         function click_yes() {
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/app/userdanger/', true);
             xhr.send();
+            var xhr_save_s3 = new XMLHttpRequest();
+            xhr_save_s3.open('Post', '/app/uploads3/', true);
+            xhr_save_s3.send();
+            var xhr_remove = new XMLHttpRequest();
+            xhr_remove.open('POST', '/app/remove_file/', true);
+            xhr_remove.send();
             window.location.href = "{% url 'app:popup1' %}";
         }
+        btn_yes.addEventListener("click", e => {
+            click_yes();
+        })
         
     </script>
     <!--신고내역-->

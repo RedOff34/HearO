@@ -21,4 +21,5 @@ urlpatterns = [
      path('remove_file/', views.remove_file, name='remove_file'),
      path('getsetting/', views.get_setting, name='get_setting'),
      path('latestdanger/', views.get_latest_danger, name='get_latest_danger'),
+     path('uploads3/', views.upload_s3, name='upload_s3'),
 ]

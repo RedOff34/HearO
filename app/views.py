@@ -14,6 +14,8 @@ import boto3
 import os
 import requests, json 
 import googlemaps
+import time
+
 
 @login_required
 @csrf_exempt
@@ -94,12 +96,38 @@ def task_emergency_file(request: HttpResponse):
     files = os.listdir(folder_path)
     files.sort(reverse=True)
     save_danger_from_file(request)
-    os.remove(os.path.join(folder_path, files[0]))
     return HttpResponse("task complete")
 
 @login_required
 @csrf_exempt
+def send_message(request:HttpResponse):
+    user = request.user
+    user_id = user.user_id
+
+@login_required
+@csrf_exempt
+def upload_s3(request: HttpResponse):
+    user = request.user
+    user_id = user.user_id
+    folder_path = './media/sound_history/'
+    folder_path = os.path.join(folder_path, user_id + '/')
+    files = os.listdir(folder_path)
+    files.sort(reverse=True)
+    print(files)
+    file_path = os.path.join(folder_path, files[0])
+    session = boto3.session.Session()
+    s3_client = session.client(
+            service_name='s3',
+            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY
+            )
+    response = s3_client.upload_file(file_path,'hearo-sound', os.path.join('sound/',files[0]))
+    return HttpResponse("s3 upload complete")
+
+@login_required
+@csrf_exempt
 def remove_file(request: HttpResponse):
+    time.sleep(3)
     user = request.user
     user_id = user.user_id
     folder_path = './media/sound_history/'

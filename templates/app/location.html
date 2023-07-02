@@ -32,7 +32,7 @@ function check_folder(threshold = 50){
               
               console.log(fileName.slice(-6,-4))
               var lastTwoDigits = parseInt(fileName.slice(-6,-4));
-              if (lastTwoDigits > threshold) {
+              if (lastTwoDigits >= threshold) {
                   console.log('File:', fileName);
                   window.location.href = '/app/popup2/';
                   xhr_task = new XMLHttpRequest();
