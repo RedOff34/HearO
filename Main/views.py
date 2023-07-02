@@ -193,6 +193,7 @@ def popup1(request):
 def popup2(request):
     return render(request, 'main/popup2.html')
 
-def HistoryView(request):
-    his = History.objects.all()
+def HistoryView(request:HttpResponse):
+    user = request.user
+    his = History.objects.filter(user=user)
     return render(request, 'main/UserHistory.html', {'his':his})

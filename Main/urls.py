@@ -13,6 +13,7 @@ urlpatterns = [
     path('info/', views.Info, name='info'), # 문의 게시판
     path('Post/', views.PostMove, name='Post'), # 문의 게시판
     path('Settings/', views.Settings, name='setting'), # 설정
+    path('History/', views.HistoryView, name = 'history'), # 신고내역
     path('Post/New/', views.PostNew, name = 'PostNew'),
     path('Post/<int:pk>/', views.PostView, name = 'PostView'),
     path('Post/Update/<int:pk>/', views.PostUpdate, name = 'PostUpdate'),

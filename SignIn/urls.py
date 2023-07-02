@@ -16,7 +16,6 @@ urlpatterns = [
     path('update/', views.user_update, name='update'),     # 회원정보수정
     path('password/', views.password, name='password'),    # 비밀번호 변경
     path('get_user_info/', views.get_user_info, name='get_user_info'),  # 회원 정보 GET
-
     path('check-user-id/', views.CheckUserIdView.as_view(), name='check_user_id'),
 ]
 
