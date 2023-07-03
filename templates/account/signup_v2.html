@@ -1,6 +1,6 @@
 {% load static %}
 {% include "header.html" %}
-
+{% include "navbar.html" %}
     
         <!-- Page Header Start -->
         <div class="container-fluid bg-dark p-5">
@@ -29,7 +29,7 @@
                             {{ form.name }}
                             <br>
                             {% for error in form.name.errors %}
-                            <div class="error" style="color: #F3525A; font-size:5px;">
+                            <div class="error" style="color: #F3525A; font-size:14px;">
                                  {{ error }}
                             </div>
                             {% endfor %}
@@ -41,7 +41,7 @@
                         <fieldset>
                             {{ form.gender }}                    
                             {% for error in form.gender.errors %}
-                            <div class="error" style="color: #F3525A; font-size:5px;">
+                            <div class="error" style="color: #F3525A; font-size:14px;">
                                  {{ error }}
                             </div>
                             {% endfor %}
@@ -54,30 +54,16 @@
                             {{ form.user_id }}
                             <br>
                             {% for error in form.user_id.errors %}
-                            <div class="error" style="color: #F3525A; font-size:5px;">
+                            <div class="error" style="color: #F3525A; font-size:14px;">
                                  {{ error }}
                             </div>
                             {% endfor %}
                         </div>
                     </div>
-                        {% comment %} <button id="check-duplicate">중복 확인</button> {% endcomment %}
+                        
                     </div>
 
-                    {% comment %} <script>
-                        document.getElementById('check-duplicate').onclick = function() {
-                            var xhr = new XMLHttpRequest();
-                            var user_id = document.getElementById('form-floating-3').value;
-                            xhr.open('GET', '/check-user-id?user_id=' + user_id, true);
-                            xhr.onload = function() {
-                                if (xhr.responseText === 'true') {
-                                    alert('이미 사용중인 아이디입니다.');
-                                } else {
-                                    alert('사용 가능한 아이디입니다.');
-                                }
-                            }
-                            xhr.send();
-                        }; 
-                        </script>{% endcomment %}
+                    
 
                         <div class="col-6">
                             <label for="form-floating-3">생년월일</label>
@@ -85,7 +71,7 @@
                                 {{ form.birth }}
                                 <br>
                                 {% for error in form.birth.errors %}
-                                <div class="error" style="color: #F3525A; font-size:5px;">
+                                <div class="error" style="color: #F3525A; font-size:14px;">
                                      {{ error }}
                                 </div>
                                 {% endfor %}
@@ -98,7 +84,7 @@
                                 {{ form.email }}
                                 <br>
                                 {% for error in form.email.errors %}
-                                <div class="error" style="color: #F3525A; font-size:5px;">
+                                <div class="error" style="color: #F3525A; font-size:14px;">
                                      {{ error }}
                                 </div>
                                 {% endfor %}
@@ -111,7 +97,7 @@
                                 {{ form.password1 }}
                                 <br>
                                 {% for error in form.password1.errors %}
-                                <div class="error" style="color: #F3525A; font-size:5px;">
+                                <div class="error" style="color: #F3525A; font-size:14px;">
                                      {{ error }}
                                 </div>
                                 {% endfor %}
@@ -124,7 +110,7 @@
                                 {{ form.password2 }}
                                 <br>
                                 {% for error in form.password2.errors %}
-                                <div class="error" style="color: #F3525A; font-size:5px;">
+                                <div class="error" style="color: #F3525A; font-size:14px;">
                                      {{ error }}
                                 </div>
                                 {% endfor %}
@@ -137,7 +123,7 @@
                                 {{ form.phone_num }}
                                 <br>
                                 {% for error in form.phone_num.errors %}
-                                <div class="error" style="color: #F3525A; font-size:5px;">
+                                <div class="error" style="color: #F3525A; font-size:14px;">
                                      {{ error }}
                                 </div>
                                 {% endfor %}
@@ -150,7 +136,7 @@
                                 {{ form.emergency }}
                                 <br>
                                 {% for error in form.emergency.errors %}
-                                <div class="error" style="color: #F3525A; font-size:5px;">
+                                <div class="error" style="color: #F3525A; font-size:14px;">
                                      {{ error }}
                                 </div>
                                 {% endfor %}
@@ -163,13 +149,22 @@
                                 {{ form.address }}
                                 <br>
                                 {% for error in form.address.errors %}
-                                <div class="error" style="color: #F3525A; font-size:5px;">
+                                <div class="error" style="color: #F3525A; font-size:14px;">
                                      {{ error }}
                                 </div>
                                 {% endfor %}
                             </fieldset>
                         </div>
 
+                        <div class="col-12">
+                            <label for="medical_info">의료정보(선택)</label><br>
+                            <fieldset>
+                                {{ form.medical_info }}
+                                <br>
+                         
+                            </fieldset>
+                        </div>
+ 
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary w-100 py-3">가입하기</button>
                     </div>

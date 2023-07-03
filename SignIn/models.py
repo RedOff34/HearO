@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class UserManager(BaseUserManager):
-    def create_user(self, user_id, password, name, email, phone_num, emergency, address, gender, birth, **extra_fields):
+    def create_user(self, user_id, password, name, email, phone_num, emergency, address, gender, birth, medical_info,**extra_fields):
         if not user_id:
             raise ValueError('The user_id field must be set')
         
@@ -16,6 +18,7 @@ class UserManager(BaseUserManager):
             address=address,
             gender=gender,
             birth=birth,
+            medical_info = medical_info
             **extra_fields
         )
         user.set_password(password)
@@ -38,11 +41,12 @@ class User(AbstractBaseUser):
     address = models.CharField(max_length=50)
     gender = models.CharField(max_length=10)
     birth = models.DateField()
-
+    medical_info = models.CharField(max_length=500,null=True, blank=True, default='')
+    
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    
+     
 
     objects = UserManager()
 
@@ -61,3 +65,8 @@ class User(AbstractBaseUser):
         return self.is_admin
     
     
+@receiver(post_save, sender=User)
+def create_user_setting(sender, instance, created, **kwargs):
+    if created:
+        from Main.models import Setting  # 'Setting' 모델을 직접 가져옵니다.
+        Setting.objects.create(user=instance, sensitivity=50, count=50)

@@ -17,20 +17,24 @@
                 {% else %}
                     <a class="nav-link {% if request.resolver_match.url_name == 'first' %}active{% endif %}" href="{% url 'first' %}">로그인</a>
                 {% endif %}
-                
-                <a href="{% url 'SignIn:pia' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'pia' %}active{% endif %}">회원가입</a>
+                {% if user.is_authenticated %}
+                <!-- 로그인한 사용자를 위한 내용. 이 경우에는 아무것도 표시하지 않습니다. -->
+                {% else %}
+                <!-- 로그인하지 않은 사용자를 위한 내용 -->
+                <a href="{% url 'SignIn:pia' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'pia' or request.resolver_match.url_name == 'signup' %}active{% endif %}">회원가입</a>
+                {% endif %}
+
                 <a href="{% url 'Main:info' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'info' %}active{% endif %}">HearO란?</a>
-                <a href="{% url 'Main:Post' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'Post' %}active{% endif %}">게시판</a>
+                <a href="{% url 'Main:Post' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'Post' or request.resolver_match.url_name == 'PostNew' or request.resolver_match.url_name == 'PostView' or request.resolver_match.url_name == 'PostUpdate' %}active{% endif %}">게시판</a>
                 
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">마이페이지</a>
+                    <a href="#" class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'profile' or request.resolver_match.url_name == 'update' or request.resolver_match.url_name == 'password' or request.resolver_match.url_name == 'userhistory' or request.resolver_match.url_name == 'Settings' %}active{% endif %}" data-bs-toggle="dropdown">마이페이지</a>
                     <div class="dropdown-menu m-0">
-                        <a href="{% url 'SignIn:profile' %}" class="dropdown-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">회원정보</a>
-                        <a href="detail.html" class="dropdown-item">신고내역</a>
-                        <a href="Settings.html" class="dropdown-item">환경설정</a>
-                
+                        <a href="{% url 'SignIn:profile' %}" class="dropdown-item {% if request.resolver_match.url_name == 'profile' or request.resolver_match.url_name == 'update' or request.resolver_match.url_name == 'password' %}active{% endif %}">회원정보</a>
+                        <a href="{% url 'Main:userhistory'%}" class="dropdown-item {% if request.resolver_match.url_name == 'userhistory' %}active{% endif %}">신고내역</a>
+                        <a href="{% url 'Main:setting'%}" class="dropdown-item {% if request.resolver_match.url_name == 'Settings' %}active{% endif %}">환경설정</a>
+                    </div>
                 </div>
-            </div>
         </div>
     </nav>
     <!-- Navbar End -->

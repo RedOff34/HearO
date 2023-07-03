@@ -22,7 +22,9 @@ from django.urls import include, path
 from django.shortcuts import render
 from django.conf.urls.static import static
 from django.conf import settings
+from hearo.utils import logout_required
 
+@logout_required
 def index(request):
     return render(request, 'Index.html')
 
