@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import os
 import shutil
+import urllib.request
 import requests
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
@@ -18,6 +19,7 @@ import time
 import base64
 import hmac
 import hashlib
+from furl import furl
 
 
 
@@ -48,7 +50,7 @@ def get_latest_history(request: HttpResponse):
         'location':latest_history.location, 
         'date':latest_history.date, 
         'danger_type':latest_history.danger_type, 
-        'file':latest_history.file.name,
+        'file':latest_history.file,
     }
     return JsonResponse(userhistory)
 
@@ -102,6 +104,26 @@ def task_emergency_file(request: HttpResponse):
     save_danger_from_file(request)
     return HttpResponse("task complete")
 
+def short_url(url):
+    client_id = settings.SHORTEN_URL_CLIENT_ID
+    client_secret = settings.SHORTEN_URL_CLIENT_SECRET
+    api_url = furl("https://openapi.naver.com/v1/util/shorturl")
+    url = url.lstrip('//')
+    api_url.args['url'] = url
+    request = urllib.request.Request(api_url)
+    request.add_header("X-Naver-Client-Id",client_id)   
+    request.add_header("X-Naver-Client-Secret",client_secret)   
+    response = urllib.request.urlopen(request) 
+    rescode = response.getcode()
+    if(rescode==200):
+        ret_data = response.read().decode('utf-8')
+        short_url = json.loads(ret_data)
+        return short_url['result']['url']
+    else:
+        print("Error Code:" + rescode)
+        return HttpResponse("url shorten error")
+
+    
 @login_required
 @csrf_exempt
 def send_message(request:HttpResponse):
@@ -119,7 +141,7 @@ def send_message(request:HttpResponse):
     url = "https://sens.apigw.ntruss.com"
     uri = f"/sms/v2/services/{service_key}/messages"    
     timestamp = str(int(time.time() * 1000))
-    contents =  '이름: {} \n'.format(user_name) + '시간: {}\n'.format(date) + '현재 상황: {}\n'.format(danger_type)+ '위치: {}\n'.format(location) + '음성파일: {} \n'.format(file)
+    contents =  '이름: {} \n'.format(user_name) + '시간: {}\n'.format(date) + '현재 상황: {}\n'.format(danger_type)+ '위치: {}\n'.format(location) + '음성파일: {} \n'.format(short_url(file))
 
     header = {
     "Content-Type": "application/json; charset=utf-8", 
@@ -129,9 +151,9 @@ def send_message(request:HttpResponse):
     }
     data = {
         "type": "MMS",
-        "from": user.phone_num,
+        "from": '01092443682',
         "content": contents,
-        "subject": "SENS",
+        "subject": "HEAROS",
         "messages": [
             {
                 "to": number,

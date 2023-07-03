@@ -1,5 +1,4 @@
 {% load static %}
-
 {% include "header.html" %}
 <!DOCTYPE html>
 <html lang="en">
@@ -33,27 +32,14 @@
     top: 0;
     display: flex;
     flex-direction: column;
-    
     justify-content: center;
     background: rgba(19, 18, 18, 0.8);
-
     align-items: center;
     border: 1px solid rgba(61, 41, 41, 0.18);
+    margin: auto;
+    text-align: center;
 }
-#modal .modal-window {
-    background: transparent;
-    backdrop-filter: blur( 13.5px );
-    -webkit-backdrop-filter: blur( 13.5px );
-    border-radius: 10px;
-    border: 0px;
-    width: 100%;
-    height: 100%;
-    top: -100px;
-    padding: 10px;
-    border: 0.5px;
-    align-items: center;
-    justify-content: center;
-}
+
 #modal .title {
     padding-left: 10px;
     display: inline;
@@ -65,47 +51,44 @@
 }
 #modal .close-area {
     position:absolute;
-    top: 13%;
-    right: 7%;
+    top: 4%;
+    right: 3%;
     float: right;
     padding-right: 10px;
     cursor: pointer;
-
-    
     color: white;
 }
 
 #modal .content {
     position:absolute;
-    top:40%;
-    left:7%;
-    align-items: center;
-    text-align: center;
-    width: 330px;
-    
-    margin: 20px;
+    top:63%;
+    left:45%;
 
+    width: 330px;  
+    margin: 20px;
+    font-size:14px;
     color: rgb(61, 56, 56);
     
-    
+    transform: translate(-50%, -50%);
     
 }
-.content p{
-    margin: 0px;
-    font-size:14px;
+#modal .sos_pop{
+    width: 380px;
+    height: 500px
+    text-align:center;
+    align-items: center;
+    position:relative;
 }
 
 .sos_call{
-    align-items: center;
+    
     position:relative;
     text-align:center;
-    width: 380px;
-    height: 500px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    
+    width: 100%;
+    height:100%;
 
+
+    
 }
 
 
@@ -145,8 +128,6 @@
 
 
 
-
-
     <!-- Testimonial Start -->
    
     
@@ -154,8 +135,8 @@
     <br>
     <!--모달-->
     <div id="modal" class="modal-overlay">
-        <div class="modal-window">
-         
+      
+        <div class="sos_pop">
             <img class="sos_call" src="{% static 'img/sos_call.png' %}">
                   
             <div class="close-area" onclick="location.href='{% url 'Main:index' %}'">X</div>
@@ -171,11 +152,8 @@
                 <br>
                 <div><p>음성 파일</p>  <section id="file" style="display:inline; color:rgb(108, 107, 107); font-size:13px;"></section></div>
             </div>
-       
-        
-
-        
-    </div>
+ 
+        </div>
 </div>
 
 
