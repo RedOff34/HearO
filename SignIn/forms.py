@@ -18,7 +18,7 @@ class UserCreationForm(forms.ModelForm):
             'class': 'form-control', 
             'id': 'form-floating-1', 
             'placeholder': '홍길동'}))
-    
+     
     GENDER_CHOICES = [
         ('남자', '남자'),
         ('여자', '여자'),
@@ -55,7 +55,7 @@ class UserCreationForm(forms.ModelForm):
             attrs={
                 'class': 'form-control',
                 'id': 'form-floating-3',
-                'placeholder': '비밀번호를 입력해주세요.'
+                'placeholder': '숫자와 문자를 조합해 8자 이상을 입력해주세요.'
             }))
     
     password2 = forms.CharField(
@@ -89,9 +89,17 @@ class UserCreationForm(forms.ModelForm):
                 'id': 'form-floating-3',
                 'placeholder': '서울시 강남구 역삼동'
             }))
+    
+    medical_info = forms.CharField(required=False,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'id': 'form-floating-3',
+                'placeholder': '혈액형, 복용 중인 약, 기저질환 등을 입력해 주세요.'
+            }))
     class Meta:
         model = User
-        fields = ('user_id', 'name', 'email', 'phone_num', 'emergency', 'address', 'gender', 'birth')
+        fields = ('user_id', 'name', 'email', 'phone_num', 'emergency', 'address', 'gender', 'birth', 'medical_info')
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -201,10 +209,18 @@ class UserChangeForm(forms.ModelForm):
                 'id': 'form-floating-3',
                 'placeholder': '서울시 강남구 역삼동'
             }))
+    
+    medical_info = forms.CharField(required=False,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'id': 'form-floating-3',
+                'placeholder': '혈액형, 복용 중인 약, 기저질환 등을 입력해 주세요.'
+            }))
 
     class Meta:
         model = User
-        fields = ('name', 'email', 'phone_num', 'emergency', 'address',)
+        fields = ('name', 'email', 'phone_num', 'emergency', 'address','medical_info')
     
     def clean_name(self): # 이름 유효성검사
         name = self.cleaned_data.get("name")
@@ -277,3 +293,15 @@ class PasswordChangeForm(AuthPasswordChangeForm):
                 'id': 'form-floating-3',
                 'placeholder': '새 비밀번호 확인'
             }))
+    
+    def clean_new_password2(self):
+        password1 = self.cleaned_data.get("new_password1")
+        password2 = self.cleaned_data.get("new_password2")
+        
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("비밀번호가 같지 않습니다.")
+        if len(password1) < 8:
+            raise forms.ValidationError('비밀번호는 8자리이상을 입력해주세요.')
+        if not any(char.isdigit() for char in password1) or not any(char.isalpha() for char in password1):
+            raise forms.ValidationError('비밀번호에 숫자와 문자를 포함해 주세요.')
+        return password2
