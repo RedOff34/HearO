@@ -57,9 +57,10 @@ def PostNew(request):
 def PostView(request, pk):
     post = get_object_or_404(Post, post_id=pk) # 게시글 내용
     comment = Comment.objects.filter(post = post) # 댓글 내용
-    file_url = None
-    if post.file:  # 파일 필드가 비어있지 않은 경우에만 파일 URL을 설정 , 게시글 보이는 부분
+     if post.file:  # 파일 필드가 비어있지 않은 경우에만 파일 URL을 설정 , 게시글 보이는 부분
         file_url = post.file.url
+    else:
+        file_url = None
 
     if request.method == "POST": # 댓글 작성 부분
         form = CommentModelForm(request.POST)  
@@ -193,7 +194,7 @@ def popup1(request):
 def popup2(request):
     return render(request, 'main/popup2.html')
 
-def HistoryView(request:HttpResponse):
-    user = request.user
-    his = History.objects.filter(user=user)
+@login_required
+def HistoryView(request):
+    his = History.objects.filter(user=request.user)
     return render(request, 'main/UserHistory.html', {'his':his})
