@@ -57,7 +57,7 @@ def PostNew(request):
 def PostView(request, pk):
     post = get_object_or_404(Post, post_id=pk) # 게시글 내용
     comment = Comment.objects.filter(post = post) # 댓글 내용
-     if post.file:  # 파일 필드가 비어있지 않은 경우에만 파일 URL을 설정 , 게시글 보이는 부분
+    if post.file:  # 파일 필드가 비어있지 않은 경우에만 파일 URL을 설정 , 게시글 보이는 부분
         file_url = post.file.url
     else:
         file_url = None
