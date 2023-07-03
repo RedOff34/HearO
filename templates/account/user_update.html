@@ -1,5 +1,4 @@
 {% load static %}
-{% include "header.html" %}
 <!DOCTYPE html>
 <html lang="en">
     <style>
@@ -60,6 +59,7 @@
 <div>
 
 
+{% include "navbar.html" %}
 
 
 
@@ -81,8 +81,7 @@
             <div class="col-lg-6 py-6 px-5">              
                     <div class="row g-3">
                     <form method="post" action="{% url 'SignIn:update' %}">
-                        {% csrf_token %}
-                        {% include "form_errors.html" %}
+                        {% csrf_token %}             
                         <div class="row g-3">
                             <div class="col-12">
                                 <label for="form-floating-1">이름</label>
@@ -136,6 +135,14 @@
                                     {{ form.address }}
                                 </fieldset>
                             </div>
+                            <div class="col-12">
+                                <label for="medical_info">의료정보</label><br>
+                                <fieldset>
+                                    {{ form.medical_info }}
+                                </fieldset>
+                            </div>
+
+                            
                             <div class="col-12 hc d-flex justify-content-between" style="width: 250px;">
                                 <a href="{% url 'SignIn:profile' %}" class="btn btn-primary">돌아가기</a>
                                 <button class="btn btn-primary" type="submit">수정하기</button>
