@@ -125,8 +125,15 @@
         let isRecording = false;
         let chunks = [];
         let intervalid;
-
-  
+        let notification;
+        let notificationPermission = Notification.permission;
+        if (notificationPermission !== 'denied') {
+          //Notification을 거부했을 경우 재 허용 창 띄우기
+          Notification.requestPermission(function (permission) {
+              console.log(permission)
+          });
+        }
+        
         function makeSound(stream) {
           const source = audioCtx.createMediaStreamSource(stream);
           source.connect(analyser);

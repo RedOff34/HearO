@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 import os
-import shutil
+from rest_framework.views import APIView
+from rest_framework.response import Response 
 import urllib.request
 import requests
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
-from .models import Location, danger
+from .models import Location, danger, DeviceTokenSerializer
 from SignIn.models import User 
 from django.contrib.auth.decorators import login_required
 from Main.models import History, Setting
@@ -20,7 +21,29 @@ import base64
 import hmac
 import hashlib
 from furl import furl
+from firebase_admin import messaging
 
+def print_message(request):
+    print(request)
+    return HttpResponse("print")
+
+@login_required
+@csrf_exempt
+def send_push_notification(request):
+    if request.method == 'POST':
+        print(request.POST)
+        token = request.POST['token']
+        message = messaging.Message(
+            notification = messaging.Notification(
+                title='HEARo',
+                body='응급상황 발생'
+            ),
+            token=token,   
+        )
+        response = messaging.send(message)
+        print('Successfully sent message:', response)
+    
+    return HttpResponse("push")
 
 
 @login_required
@@ -130,6 +153,7 @@ def send_message(request:HttpResponse):
     user = request.user
     user_name = user.name
     number = user.emergency
+    medical_info = user.medical_info
     latest_history = History.objects.filter(user=user).order_by('-date').first()
     date = latest_history.date
     danger_type = latest_history.danger_type
@@ -141,7 +165,7 @@ def send_message(request:HttpResponse):
     url = "https://sens.apigw.ntruss.com"
     uri = f"/sms/v2/services/{service_key}/messages"    
     timestamp = str(int(time.time() * 1000))
-    contents =  '이름: {} \n'.format(user_name) + '시간: {}\n'.format(date) + '현재 상황: {}\n'.format(danger_type)+ '위치: {}\n'.format(location) + '음성파일: {} \n'.format(short_url(file))
+    contents =  '이름: {} \n'.format(user_name) + '시간: {}\n'.format(date) + '현재 상황: {}\n'.format(danger_type)+ '위치: {}\n'.format(location) + '음성파일: {} \n'.format(short_url(file)) + '특이사항: {}\n'.format(medical_info)
 
     header = {
     "Content-Type": "application/json; charset=utf-8", 
@@ -200,7 +224,7 @@ def upload_s3(request: HttpResponse):
 @login_required
 @csrf_exempt
 def remove_file(request: HttpResponse):
-    time.sleep(3)
+    time.sleep(2)
     user = request.user
     user_id = user.user_id
     folder_path = './media/sound_history/'
@@ -213,6 +237,7 @@ def remove_file(request: HttpResponse):
 @login_required
 @csrf_exempt
 def get_folder_contents(request: HttpResponse):
+    time.sleep(0.5)
     user = request.user
     user_id = user.user_id
     folder_path = './media/sound_history/'

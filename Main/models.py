@@ -2,7 +2,11 @@
 
 from django.db import models
 from SignIn.models import User
+
+
 # Create your models here.
+
+
 
 class Post(models.Model):
     post_id = models.AutoField(primary_key=True) # 게시물 번호 정수로 변경한 이유는 순서별로 정렬하기 위해

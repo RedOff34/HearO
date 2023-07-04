@@ -24,4 +24,7 @@ urlpatterns = [
      path('uploads3/', views.upload_s3, name='upload_s3'),
      path('sendmessage/', views.send_message, name='send_message'),
      path('shorurl/', views.short_url, name='short_url'),
+     path('pushnoti/', views.send_push_notification, name='send_push_notification'),
+     path('print_message/', views.print_message, name='print_message'),
+    
 ]

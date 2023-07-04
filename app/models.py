@@ -1,6 +1,10 @@
 from django.db import models
 from SignIn.models import User
+from rest_framework import serializers
 # Create your models here.
+
+class DeviceTokenSerializer(serializers.Serializer):
+    device_token = serializers.CharField(max_length=500)
 
 class Location(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

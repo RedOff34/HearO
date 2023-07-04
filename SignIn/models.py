@@ -69,4 +69,4 @@ class User(AbstractBaseUser):
 def create_user_setting(sender, instance, created, **kwargs):
     if created:
         from Main.models import Setting  # 'Setting' 모델을 직접 가져옵니다.
-        Setting.objects.create(user=instance, sensitivity=50, count=50)
+        Setting.objects.create(user=instance, sensitivity=100, count=10)

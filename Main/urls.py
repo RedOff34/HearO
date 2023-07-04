@@ -25,4 +25,5 @@ urlpatterns = [
     path('popup1/', views.popup1, name='popup1'),
     path('popup2/', views.popup2, name='popup2'),
     path('userhistory/', views.HistoryView, name='userhistory'), #신고내역
+    path('firebase-messaging-sw.js', views.ServiceWorkerView.as_view(), name='service_worker'),
 ]

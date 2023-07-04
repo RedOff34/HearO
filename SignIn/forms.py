@@ -145,6 +145,12 @@ class UserCreationForm(forms.ModelForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('이미 사용 중인 이메일입니다.')
         return email
+    
+    def clean_emergency(self):  # 핸드폰번호 유효성검사
+        emergency = self.cleaned_data.get("emergency")
+        if len(emergency) < 11:
+            raise forms.ValidationError("연락처는 11자리를 입력해주세요") 
+        return emergency
         
         
 
@@ -239,7 +245,12 @@ class UserChangeForm(forms.ModelForm):
         if len(phone_num) < 11:
             raise forms.ValidationError("연락처는 11자리를 입력해주세요") 
         return phone_num
-
+    
+    def clean_emergency(self):  # 핸드폰번호 유효성검사
+        emergency = self.cleaned_data.get("emergency")
+        if len(emergency) < 11:
+            raise forms.ValidationError("연락처는 11자리를 입력해주세요") 
+        return emergency
 
 
 # 로그인 폼

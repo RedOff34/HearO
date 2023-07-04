@@ -116,6 +116,7 @@ def get_user_info(request):
         'address': user.address,
         'gender': user.gender,
         'birth': user.birth,
+        'medical_info' : user.medical_info,
     }
     # print(user_info)  # 서버 측 콘솔에 정보 출력
     return JsonResponse(user_info)

@@ -9,102 +9,210 @@
 
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=29134990ce0d37054a535a7b736b4f3d"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
 
 <script>
-var x = document.getElementById("demo");
-var map, infoWindow;
+  var x = document.getElementById("demo");
+  var map, infoWindow;
 
-function check_folder(threshold = 50){
-  var xhr_folder_content = new XMLHttpRequest();
-  xhr_folder_content.open('POST', '/app/get_folder_contents/', true);  // Django URL에 맞게 수정
-  xhr_folder_content.onload = function () {
-    console.log(xhr_folder_content.status);
-    if (xhr_folder_content.status === 200) {
-        var response = JSON.parse(xhr_folder_content.responseText);
-        var files = response.files;
-        files.sort(function(a, b) {
-          return b.localeCompare(a);
-        });
-        // Process file list
-        if(files.length > 0) {
-          for (var i = 0; i < files.length; i++) {
-              var fileName = files[i];
-              
-              console.log(fileName.slice(-6,-4))
-              var lastTwoDigits = parseInt(fileName.slice(-6,-4));
-              if (lastTwoDigits >= threshold) {
-                  console.log('File:', fileName);
-                  window.location.href = '/app/popup2/';
-                  xhr_task = new XMLHttpRequest();
-                  xhr_task.open('POST', '/app/task_emergency_file/', true);
-                  xhr_task.send();
-                  if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(showPosition);
-                  } else { 
-                    console.log("Geolocation is not supported by this browser.");
-                  }
-             }else{
-              xhr_remove = new XMLHttpRequest();
-              xhr_remove.open('POST', '/app/remove_file/', true);
-              xhr_remove.send();
-             }
-          }
-        }
-      } else {
-        console.error('Request failed. Status:', xhr_folder_content.status);
-     }
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDgtSjvTOyVl0K0mgPmahTP9ztjAgr6k1I",
+    authDomain: "hearo-78135.firebaseapp.com",
+    databaseURL: "https://hearo-78135-default-rtdb.firebaseio.com",
+    projectId: "hearo-78135",
+    storageBucket: "hearo-78135.appspot.com",
+    messagingSenderId: "204455560154",
+    appId: "1:204455560154:web:0516adb61f9b2fde45b6e3",
+    measurementId: "G-FQ7E4135WX"
   };
-  xhr_folder_content.send();
-}
 
-function getLocation() {
-  var xhr_setting = new XMLHttpRequest();
-  xhr_setting.open('POST', '/app/getsetting/', true);
-  xhr_setting.onreadystatechange = function(){
-    if (xhr_setting.readyState === 4 && xhr_setting.status === 200){
-      var usersetting = JSON.parse(xhr_setting.responseText);
-      var sensitivity = usersetting.sensitivity;
-      let max_threshold = 99.9;
-      let min_threshold = 50.0;
-      let threshold = (min_threshold-max_threshold)*sensitivity/100 + max_threshold;
-      const intervalid = setInterval(check_folder,5000, threshold); 
+  firebase.initializeApp(firebaseConfig);
+  const message = firebase.messaging();
+
+
+
+
+
+  function check_folder(threshold = 50){
+
+
+    var xhr_folder_content = new XMLHttpRequest();
+    xhr_folder_content.open('POST', '/app/get_folder_contents/', true);  // Django URL에 맞게 수정
+    xhr_folder_content.onload = function () {
+      console.log(xhr_folder_content.status);
+      if (xhr_folder_content.status === 200) {
+          var response = JSON.parse(xhr_folder_content.responseText);
+          var files = response.files;
+          files.sort(function(a, b) {
+            return b.localeCompare(a);
+          });
+          // Process file list
+          if(files.length > 0) {
+            for (var i = 0; i < files.length; i++) {
+                var fileName = files[i];
+                
+                console.log(fileName.slice(-6,-4))
+                var lastTwoDigits = parseInt(fileName.slice(-6,-4));
+                if (lastTwoDigits >= threshold) {
+                    console.log('File:', fileName);
+                    if ('serviceWorker' in navigator) {
+                      message.getToken({vapidKey:"BEbTVF3r7CQqh5r-tPrCxxjeTem-oJNh9POmkm8LgAc4nPy-Hd6lxKl6gHWCo2aRjrdlOfmVM272b5-W9N95t54"})
+                      .then(function(token){
+                          var token = token;
+                          navigator.serviceWorker.register('firebase-messaging-sw.js').then(function(registration) {
+                            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                            xhr_push = new XMLHttpRequest();
+                            xhr_push.open('POST', '/app/pushnoti/', true);
+                            xhr_push.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            var push_token = "token="+encodeURIComponent(token);
+                            xhr_push.send(push_token);
+                          })
+                        })
+                      .catch(function(arr){
+                          console.log("Error Occured");
+                      });  
+                    }
+                    window.location.href = '/app/popup2/';
+                    xhr_task = new XMLHttpRequest();
+                    xhr_task.open('POST', '/app/task_emergency_file/', true);
+                    xhr_task.send();
+                    if (navigator.geolocation) {
+                      navigator.geolocation.getCurrentPosition(savePosition);
+                    } else { 
+                      console.log("Geolocation is not supported by this browser.");
+                    }
+
+                    
+                    
+                  }else{
+                xhr_remove = new XMLHttpRequest();
+                xhr_remove.open('POST', '/app/remove_file/', true);
+                xhr_remove.send();
+              }
+            }
+          }
+        } else {
+          console.error('Request failed. Status:', xhr_folder_content.status);
+      }
+    };
+    xhr_folder_content.send();
+  }
+
+  {% comment %} function sendMessage(){
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/firebase-messaging-sw.js')
+        .then(function(registration) {
+          //messaging.useServiceWorker(registration);
+          
+          getToken(message, {vapidKey:"BEbTVF3r7CQqh5r-tPrCxxjeTem-oJNh9POmkm8LgAc4nPy-Hd6lxKl6gHWCo2aRjrdlOfmVM272b5-W9N95t54"}).then((currentToken) => {
+            if (currentToken) {
+              console.log('Token:', currentToken);
+            } else {
+              console.log('No registration token available.');
+            }
+          }).catch((err) => {
+            console.log('An error occurred while retrieving token:', err);
+          });
+          var payload = 'payload';
+          onMessage(message => {
+            console.log('Message received:', payload);
+          });
+        })
+        .catch(function(error) {
+          console.log('Service worker registration failed, error:', error);
+        });
+    }
+
+  } {% endcomment %}
+
+  function requestPermission() {
+    console.log('Requesting permision...');
+    Notification.requestPermission().then((permission) => {
+      if (permission == 'granted'){
+        console.log('Notification permission granted');
+      }
+    });
+  }
+
+  function getLocation() {
+    var xhr_setting = new XMLHttpRequest();
+    xhr_setting.open('POST', '/app/getsetting/', true);
+    xhr_setting.onreadystatechange = function(){
+      if (xhr_setting.readyState === 4 && xhr_setting.status === 200){
+        var usersetting = JSON.parse(xhr_setting.responseText);
+        var sensitivity = usersetting.sensitivity;
+        let max_threshold = 99.9;
+        let min_threshold = 50.0;
+        let threshold = (min_threshold-max_threshold)*sensitivity/100 + max_threshold;
+        const intervalid = setInterval(check_folder,5000, threshold); 
+      }
+    }
+    xhr_setting.send();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+      x.innerHTML = "Geolocation is not supported by this browser.";
     }
   }
-  xhr_setting.send();
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
-    x.innerHTML = "Geolocation is not supported by this browser.";
+
+  function showPosition(position) {
+    var API_KEY = 'AIzaSyD1uFlkGyGTJc9s7kQwaKKYnvNVsoqFNGQ';
+    var geocodingUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + position.coords.latitude + "," + position.coords.longitude + "&key=" + API_KEY;
+    
+    fetch(geocodingUrl)
+      .then(response => response.json())
+      .then(data => {
+        var address = data.results[0].formatted_address;
+        x.innerHTML += "<br>현재위치: " + address;
+
+                  
+        var xhr_address = new XMLHttpRequest();
+        var url_address = "{% url 'app:save_location' %}";
+        xhr_address.open("POST", url_address, true);
+        xhr_address.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr_address.onreadystatechange = function () {
+            if (xhr_address.readyState === 4 && xhr_address.status === 200) {
+                console.log(xhr_address.responseText);
+            }
+        };
+        var data_address = "address=" + address;
+        xhr_address.send(data_address);
+      });
   }
-}
 
-function showPosition(position) {
-  var API_KEY = 'AIzaSyD1uFlkGyGTJc9s7kQwaKKYnvNVsoqFNGQ';
-  var geocodingUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + position.coords.latitude + "," + position.coords.longitude + "&key=" + API_KEY;
-  
-  fetch(geocodingUrl)
-    .then(response => response.json())
-    .then(data => {
-      var address = data.results[0].formatted_address;
-      x.innerHTML += "<br>현재위치: " + address;
+  function savePosition(position) {
+    var API_KEY = 'AIzaSyD1uFlkGyGTJc9s7kQwaKKYnvNVsoqFNGQ';
+    var geocodingUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + position.coords.latitude + "," + position.coords.longitude + "&key=" + API_KEY;
+    
+    fetch(geocodingUrl)
+      .then(response => response.json())
+      .then(data => {
+        var address = data.results[0].formatted_address;
 
-                
-      var xhr_address = new XMLHttpRequest();
-      var url_address = "{% url 'app:save_location' %}";
-      xhr_address.open("POST", url_address, true);
-      xhr_address.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      xhr_address.onreadystatechange = function () {
-          if (xhr_address.readyState === 4 && xhr_address.status === 200) {
-              console.log(xhr_address.responseText);
-          }
-      };
-      var data_address = "address=" + address;
-      xhr_address.send(data_address);
-    });
-}
+        var xhr_address = new XMLHttpRequest();
+        var url_address = "{% url 'app:save_location' %}";
+        xhr_address.open("POST", url_address, true);
+        xhr_address.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr_address.onreadystatechange = function () {
+            if (xhr_address.readyState === 4 && xhr_address.status === 200) {
+                console.log(xhr_address.responseText);
+            }
+        };
+        var data_address = "address=" + address;
+        xhr_address.send(data_address);
+      });
+  }
+</script>
 
-window.onload = getLocation;
 
+
+<script>
+window.onload = function(){
+  requestPermission();
+  getLocation();
+} ;
 </script>
 
 </body>

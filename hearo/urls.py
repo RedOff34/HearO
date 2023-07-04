@@ -23,6 +23,9 @@ from django.shortcuts import render
 from django.conf.urls.static import static
 from django.conf import settings
 from hearo.utils import logout_required
+from . import views
+
+app_name = 'hearo'
 
 @logout_required
 def index(request):
@@ -38,5 +41,6 @@ urlpatterns = [
     path('SignIn/',include('SignIn.urls')), # 회원가입 페이지
     path('Main/',include('Main.urls')), # 메인 페이지
     path('app/', include('app.urls')), # 어플기능
+    path('firebase-messaging-sw.js', views.ServiceWorkerView.as_view(), name='service_worker'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -127,6 +127,12 @@
                                 <label for="form-floating-3">비상연락처</label>
                                 <div class="form-floating">
                                     {{ form.emergency }}
+                                    <br>
+                                    {% for error in form.emergency.errors %}
+                                    <div class="error" style="color: #F3525A;">
+                                         {{ error }}
+                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="col-12">

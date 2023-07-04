@@ -13,6 +13,7 @@ from Main.models import History
 from django.core import serializers
 from django.core.files import File
 from pydub import AudioSegment
+from django.views.generic import View
 import os
 
 # Create your views here.
@@ -198,3 +199,7 @@ def popup2(request):
 def HistoryView(request):
     his = History.objects.filter(user=request.user)
     return render(request, 'main/UserHistory.html', {'his':his})
+
+class ServiceWorkerView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'firebase-messaging-sw.js', content_type="application/x-javascript")
