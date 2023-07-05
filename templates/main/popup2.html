@@ -147,8 +147,8 @@
         <div class="modal-window">
             <img class="report_Q" src="{% static 'img/report_Q.png' %}">
                   
-            <button id = "btn_no" type="button" class="close-area"><b> </b></button>
-            <button id = "btn_yes" type="button" class="yes-area" onclick="click_yes()"><b>예</b></button> 
+            <button id = "btn_no" type="button" class="close-area"><b>아니오</b></button>
+            <button id = "btn_yes" type="button" class="yes-area" onclick="click_yes()"><b></b></button> 
             <div class="title">
                 <p style="display:inline; "><span id="report" style="color:red; font-size:large; "></span> 감지 </p>
             </div>
@@ -192,11 +192,11 @@
             if (xhr_setting.readyState === 4 && xhr_setting.status === 200){
                 var usersetting = JSON.parse(xhr_setting.responseText);
                 var count = usersetting.count;
-                document.getElementById("btn_no").innerHTML = "아니오" + "(" + count +"s)";
+                document.getElementById("btn_yes").innerHTML = "예" + "(" + count +"s)";
                 myTimer = setInterval(function(){
                     count--;
                     var time = count;
-                    document.getElementById("btn_no").innerHTML = "아니오" + "(" + time +"s)";
+                    document.getElementById("btn_yes").innerHTML = "예" + "(" + time +"s)";
                     
                     
                     if(count == 0){ //카운트다운 종료 시

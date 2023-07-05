@@ -154,6 +154,7 @@ def send_message(request:HttpResponse):
     user_name = user.name
     number = user.emergency
     medical_info = user.medical_info
+    address = user.address
     latest_history = History.objects.filter(user=user).order_by('-date').first()
     date = latest_history.date
     danger_type = latest_history.danger_type
@@ -165,7 +166,7 @@ def send_message(request:HttpResponse):
     url = "https://sens.apigw.ntruss.com"
     uri = f"/sms/v2/services/{service_key}/messages"    
     timestamp = str(int(time.time() * 1000))
-    contents =  '이름: {} \n'.format(user_name) + '시간: {}\n'.format(date) + '현재 상황: {}\n'.format(danger_type)+ '위치: {}\n'.format(location) + '음성파일: {} \n'.format(short_url(file)) + '특이사항: {}\n'.format(medical_info)
+    contents =  '이름: {} \n'.format(user_name) + '시간: {}\n'.format(date) + '현재 상황: {}\n'.format(danger_type)+ '현재위치: {}\n'.format(location) + '주소: {}\n'.format(address) + '음성파일: {} \n'.format(short_url(file)) + '특이사항: {}\n'.format(medical_info)
 
     header = {
     "Content-Type": "application/json; charset=utf-8", 
@@ -179,11 +180,24 @@ def send_message(request:HttpResponse):
         "content": contents,
         "subject": "HEAROS",
         "messages": [
-            {
+            {   
                 "to": number,
             }
         ]
     }
+    
+    # data = {
+    #     "type": "MMS",
+    #     "from": '01092443682',
+    #     "content": contents,
+    #     "subject": "HEAROS",
+    #     "messages": [
+    #         {   
+    #             "to": number, "119", "112",
+    #         }
+    #     ]
+    # }
+    
     res = requests.post(url+uri, headers=header, data=json.dumps(data))
     datas = json.loads(res.text)
 
@@ -269,7 +283,7 @@ def save_location(request):
             user_id=request.user, 
             defaults={'location': address,'timestamp': timezone.now()}
         )
-
+        
         return JsonResponse({"location":address, "status": "success", "message": "Location saved successfully"})
 
 @login_required

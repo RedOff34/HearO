@@ -27,7 +27,7 @@ class AudioDataset(Dataset):
 
         # Load audio data and perform any desired transformations
         sig, sr = librosa.load(audio_path, sr=44100, mono=True)
-        sig = librosa.util.fix_length(sig, size=5*sr) 
+        sig = librosa.util.fix_length(sig, size=10*sr) 
         sig_t = torch.tensor(sig)
         padding_mask = torch.zeros(1, sig_t.shape[0]).bool().squeeze(0)
         if self.transform:
