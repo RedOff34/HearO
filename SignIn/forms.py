@@ -71,7 +71,7 @@ class UserCreationForm(forms.ModelForm):
             attrs={
                 'class': 'form-control',
                 'id': 'form-floating-3',
-                'placeholder': '01000000000'
+                'placeholder': '01012345678'
             }))
     emergency = forms.CharField(
         max_length=11,
@@ -79,7 +79,7 @@ class UserCreationForm(forms.ModelForm):
             attrs={
                 'class': 'form-control',
                 'id': 'form-floating-3',
-                'placeholder': '01000000000'
+                'placeholder': '01012345678'
             }))
     
     address = forms.CharField(
@@ -196,7 +196,7 @@ class UserChangeForm(forms.ModelForm):
             attrs={
                 'class': 'form-control',
                 'id': 'form-floating-3',
-                'placeholder': '01000000000'
+                'placeholder': '01012345678'
             }))
             
     emergency = forms.CharField(
@@ -205,7 +205,7 @@ class UserChangeForm(forms.ModelForm):
             attrs={
                 'class': 'form-control',
                 'id': 'form-floating-3',
-                'placeholder': '01000000000'
+                'placeholder': '01012345678'
             }))
     
     address = forms.CharField(
